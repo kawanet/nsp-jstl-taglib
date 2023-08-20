@@ -1,0 +1,62 @@
+{
+  "name": "nsp-jstl-taglib",
+  "description": "NSP taglib for JSTL Jakarta Standard Tag Library",
+  "version": "0.0.1",
+  "author": "@kawanet",
+  "bugs": {
+    "url": "https://github.com/kawanet/nsp-jstl-taglib/issues"
+  },
+  "dependencies": {
+    "telesy": "^1.1.2"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.5.1",
+    "mocha": "^10.2.0",
+    "nsp-server-pages": "^0.0.1",
+    "typescript": "^5.1.6"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./index.js",
+        "types": "./index.d.ts"
+      },
+      "require": "./index.js"
+    }
+  },
+  "files": [
+    "cjs/index.js",
+    "cjs/package.json",
+    "cjs/src/*.js",
+    "src/index.ts",
+    "index.cjs",
+    "package.json",
+    "src/*.js",
+    "types/*.d.ts"
+  ],
+  "homepage": "https://github.com/kawanet/nsp-jstl-taglib#readme",
+  "keywords": [
+    "JSP",
+    "JSTL",
+    "Tomcat",
+    "taglib"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.cjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kawanet/nsp-jstl-taglib.git"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "build-cjs": "make clean all",
+    "fixpack": "fixpack",
+    "prepack": "npm run build-cjs && npm run test-cjs && npm run build && npm test",
+    "test": "mocha test",
+    "test-cjs": "make test"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "types": "./index.d.ts"
+}
