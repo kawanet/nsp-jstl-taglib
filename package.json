@@ -40,7 +40,7 @@
     "taglib"
   ],
   "license": "Apache-2.0",
-  "main": "index.cjs",
+  "main": "./esm/src/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kawanet/nsp-jstl-taglib.git"
