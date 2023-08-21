@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -c make
 
-all: test-title esm/src/index.js cjs/src/index.js
+all: test-title esm/src/index.js cjs/src/index.js LICENSE
 
 test: test-esm test-cjs
 
@@ -18,6 +18,9 @@ esm/%.js: %.ts
 
 test-title:
 	perl -i -pe '@f = split("/",$$ARGV); s#^const TITLE =.*#const TITLE = "$$f[-1]";#' ./test/*.ts
+
+LICENSE:
+	curl -so $@ https://raw.githubusercontent.com/apache/tomcat-taglibs-standard/main/LICENSE
 
 clean:
 	/bin/rm -fr ./esm/*/ ./cjs/*/
