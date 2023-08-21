@@ -19,6 +19,7 @@ esm/%.js: %.ts
 types/index.d.ts: src/index.ts
 	./node_modules/.bin/tsc --outDir tmp/ --declaration --emitDeclarationOnly src/index.ts
 	perl -pe 's#(type \{) +(.*?) +(})#$$1$$2$$3#; s#( from ".)./types(/[a-z]+.)#$$1$$2#' < tmp/index.d.ts > types/index.d.ts
+	/bin/rm -f tmp/*.d.ts
 
 test-title:
 	perl -i -pe '@f = split("/",$$ARGV); s#^const TITLE =.*#const TITLE = "$$f[-1]";#' ./test/*.ts
