@@ -3,7 +3,7 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import type {jstlC} from "../../types/c.js";
+import type {jstlC} from "../index.js";
 
 /**
  * <c:set var="${var}" value="${value}"/>

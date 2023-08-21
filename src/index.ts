@@ -12,8 +12,8 @@ import type {jstlFn} from "../types/fn.js";
 
 export type {jstlC, jstlFmt, jstlFn};
 
-export const cTags: jstlC.cTags = _cTags;
+export const cTags = _cTags;
 
-export const fmtTags: jstlFmt.fmtTags = _fmtTags;
+export const fmtTags = _fmtTags;
 
-export const fnFunctions: jstlFn.fnFunctions = _fnFunctions;
+export const fnFunctions = _fnFunctions;

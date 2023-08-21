@@ -6,7 +6,7 @@ import {setTag} from "./c/SetTag.js";
 import {ifTag} from "./c/IfTag.js";
 import {chooseTag, otherwiseTag, whenTag} from "./c/ChooseTag.js";
 import {outTag} from "./c/OutTag.js";
-import type {jstlC} from "../types/index.js";
+import type {jstlC} from "./index.js";
 
 export const _cTags: jstlC.cTags = {
     catch: null,

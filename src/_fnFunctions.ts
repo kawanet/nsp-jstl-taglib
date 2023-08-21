@@ -3,7 +3,7 @@
  */
 
 import * as fn from "./fn/Functions.js";
-import {jstlFn} from "../types/index.js";
+import type {jstlFn} from "./index.js";
 
 export const _fnFunctions: jstlFn.fnFunctions = {
     contains: fn.containsFn,
