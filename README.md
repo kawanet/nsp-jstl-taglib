@@ -8,7 +8,7 @@
 - JSTL core library - e.g. `<c:if test="${test}"></c:if>`
 - JSTL formatting library - e.g. `<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>`
 - JSTL functions library - e.g. `${fn:toUpperCase("abc")}`
-- See TypeScript declaration [index.d.ts](https://github.com/kawanet/nsp-jstl-taglib/blob/main/index.d.ts) for API detail.
+- See [TypeScript declaration files](https://github.com/kawanet/nsp-jstl-taglib/blob/main/types/) for API detail.
 
 ## SYNOPSIS
 
