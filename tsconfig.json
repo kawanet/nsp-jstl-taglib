@@ -1,11 +1,9 @@
 {
   "exclude": [
-    "cjs/",
-    "node_modules",
+    "node_modules/",
     "tmp/"
   ],
   "include": [
-    "src/index.ts",
     "src/",
     "test/",
     "types/"
