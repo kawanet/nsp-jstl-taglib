@@ -19,20 +19,17 @@
   "exports": {
     ".": {
       "import": {
-        "default": "./index.js",
-        "types": "./index.d.ts"
+        "default": "./esm/src/index.js",
+        "types": "./types/index.d.ts"
       },
-      "require": "./index.js"
+      "require": "./cjs/src/index.js"
     }
   },
   "files": [
-    "cjs/index.js",
     "cjs/package.json",
-    "cjs/src/*.js",
-    "src/index.ts",
-    "index.cjs",
+    "cjs/src/**/*.js",
+    "esm/src/**/*.js",
     "package.json",
-    "src/*.js",
     "types/*.d.ts"
   ],
   "homepage": "https://github.com/kawanet/nsp-jstl-taglib#readme",
@@ -60,5 +57,5 @@
   },
   "sideEffects": false,
   "type": "module",
-  "types": "./index.d.ts"
+  "types": "./types/index.d.ts"
 }
