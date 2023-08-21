@@ -3,9 +3,9 @@
  */
 
 import * as fn from "./fn/Functions.js";
-import type {jstlFn} from "./index.js";
+import type {JstlFn} from "./index.js";
 
-export const _fnFunctions: jstlFn.fnFunctions = {
+export const _fnFunctions: JstlFn.fnFunctions = {
     contains: fn.containsFn,
     containsIgnoreCase: fn.containsIgnoreCaseFn,
     endsWith: fn.endsWithFn,

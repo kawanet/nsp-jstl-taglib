@@ -6,7 +6,7 @@ import type {NSP} from "nsp-server-pages";
  *
  * JSTL 1.2 core library
  */
-export declare namespace jstlC {
+export declare namespace JstlC {
     type cTags = {
         catch: NSP.TagFn<CatchTagAttr>;
         choose: NSP.TagFn<ChooseTagAttr>;

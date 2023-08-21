@@ -4,11 +4,11 @@
 
 import type {NSP} from "nsp-server-pages";
 import {$$} from "telesy";
-import type {jstlC} from "../index.js";
+import type {JstlC} from "../index.js";
 
 const isFalse = (value: any) => (value === false || value === "false");
 
-export const outTag: NSP.TagFn<jstlC.OutTagAttr> = tag => {
+export const outTag: NSP.TagFn<JstlC.OutTagAttr> = tag => {
     return context => {
         const attr = tag.attr(context);
         const {value, escapeXml} = attr;

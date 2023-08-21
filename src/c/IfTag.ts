@@ -3,14 +3,14 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import type {jstlC} from "../index.js";
+import type {JstlC} from "../index.js";
 
 const isTrue = (value: any) => (!!value && value !== "false");
 
 /**
  * <c:if test="${test}">
  */
-export const ifTag: NSP.TagFn<jstlC.IfTagAttr> = tag => {
+export const ifTag: NSP.TagFn<JstlC.IfTagAttr> = tag => {
     return context => {
         const {test} = tag.attr(context);
 

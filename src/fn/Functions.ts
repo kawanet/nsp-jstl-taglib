@@ -3,7 +3,7 @@
  */
 
 import {$$} from "telesy";
-import type {jstlFn} from "../index.js";
+import type {JstlFn} from "../index.js";
 
 /**
  * @description
@@ -12,7 +12,7 @@ import type {jstlFn} from "../index.js";
  * @example
  * <c:if test="${fn:contains(name, searchString)}">
  */
-export const containsFn: jstlFn.containsFn = (input, substring) => {
+export const containsFn: JstlFn.containsFn = (input, substring) => {
     return input?.includes(substring);
 };
 
@@ -23,7 +23,7 @@ export const containsFn: jstlFn.containsFn = (input, substring) => {
  * @example
  * <c:if test="${fn:containsIgnoreCase(name, searchString)}">
  */
-export const containsIgnoreCaseFn: jstlFn.containsIgnoreCaseFn = (input, substring) => {
+export const containsIgnoreCaseFn: JstlFn.containsIgnoreCaseFn = (input, substring) => {
     return containsFn(input?.toUpperCase(), substring?.toUpperCase());
 };
 
@@ -34,7 +34,7 @@ export const containsIgnoreCaseFn: jstlFn.containsIgnoreCaseFn = (input, substri
  * @example
  * <c:if test="${fn:endsWith(filename, ".txt")}">
  */
-export const endsWithFn: jstlFn.endsWithFn = (input, suffix) => {
+export const endsWithFn: JstlFn.endsWithFn = (input, suffix) => {
     return input?.endsWith(suffix);
 };
 
@@ -45,7 +45,7 @@ export const endsWithFn: jstlFn.endsWithFn = (input, suffix) => {
  * @example
  * ${fn:escapeXml(param:info)}
  */
-export const escapeXmlFn: jstlFn.escapeXmlFn = (input) => {
+export const escapeXmlFn: JstlFn.escapeXmlFn = (input) => {
     return $$(input);
 };
 
@@ -56,7 +56,7 @@ export const escapeXmlFn: jstlFn.escapeXmlFn = (input) => {
  * @example
  * ${fn:indexOf(name, "-")}
  */
-export const indexOfFn: jstlFn.indexOfFn = (input, substring) => {
+export const indexOfFn: JstlFn.indexOfFn = (input, substring) => {
     return input?.indexOf(substring);
 };
 
@@ -67,7 +67,7 @@ export const indexOfFn: jstlFn.indexOfFn = (input, substring) => {
  * @example
  * ${fn:join(array, ";")}
  */
-export const joinFn: jstlFn.joinFn = (array, separator) => {
+export const joinFn: JstlFn.joinFn = (array, separator) => {
     return (array ?? []).map(String).join(separator);
 };
 
@@ -78,7 +78,7 @@ export const joinFn: jstlFn.joinFn = (array, separator) => {
  * @example
  * You have ${fn:length(shoppingCart.products)} in your shopping cart.
  */
-export const lengthFn: jstlFn.lengthFn = (obj) => {
+export const lengthFn: JstlFn.lengthFn = (obj) => {
     return (obj as any[])?.length || 0;
 };
 
@@ -90,7 +90,7 @@ export const lengthFn: jstlFn.lengthFn = (obj) => {
  * @example
  * ${fn:replace(text, "-", "")}
  */
-export const replaceFn: jstlFn.replaceFn = (input, before, after) => {
+export const replaceFn: JstlFn.replaceFn = (input, before, after) => {
     if (!before?.length) {
         return input;
     }
@@ -106,7 +106,7 @@ export const replaceFn: jstlFn.replaceFn = (input, before, after) => {
  * @example
  * ${fn:split(customerNames, ";")}
  */
-export const splitFn: jstlFn.splitFn = (input, delimiters) => {
+export const splitFn: JstlFn.splitFn = (input, delimiters) => {
     delimiters = delimiters?.replace(/(\W)/g, "\\$1");
     return input?.split(new RegExp(`[${delimiters}]`)).filter((v, idx) => (!idx || v.length));
 };
@@ -118,7 +118,7 @@ export const splitFn: jstlFn.splitFn = (input, delimiters) => {
  * @example
  * <c:if test="${fn:startsWith(product.id, "100-")}">
  */
-export const startsWithFn: jstlFn.startsWithFn = (input, prefix) => {
+export const startsWithFn: JstlFn.startsWithFn = (input, prefix) => {
     return input?.startsWith(prefix);
 };
 
@@ -129,7 +129,7 @@ export const startsWithFn: jstlFn.startsWithFn = (input, prefix) => {
  * @example
  * P.O. Box: ${fn:substring(zip, 6, -1)}
  */
-export const substringFn: jstlFn.substringFn = (input, beginIndex, endIndex) => {
+export const substringFn: JstlFn.substringFn = (input, beginIndex, endIndex) => {
     if (beginIndex < 0) {
         beginIndex = 0;
     }
@@ -149,7 +149,7 @@ export const substringFn: jstlFn.substringFn = (input, beginIndex, endIndex) => 
  * @example
  * P.O. Box: ${fn:substringAfter(zip, "-")}
  */
-export const substringAfterFn: jstlFn.substringAfterFn = (input, substring) => {
+export const substringAfterFn: JstlFn.substringAfterFn = (input, substring) => {
     const index = input?.indexOf(substring);
     if (index === -1) {
         return "";
@@ -165,7 +165,7 @@ export const substringAfterFn: jstlFn.substringAfterFn = (input, substring) => {
  * @example
  * Zip (without P.O. Box): ${fn:substringBefore(zip, "-")}
  */
-export const substringBeforeFn: jstlFn.substringBeforeFn = (input, substring) => {
+export const substringBeforeFn: JstlFn.substringBeforeFn = (input, substring) => {
     const index = input?.indexOf(substring);
     return (index > -1) ? input.substring(0, index) : "";
 };
@@ -177,7 +177,7 @@ export const substringBeforeFn: jstlFn.substringBeforeFn = (input, substring) =>
  * @example
  * Product name: ${fn.toLowerCase(product.name)}
  */
-export const toLowerCaseFn: jstlFn.toLowerCaseFn = (a) => {
+export const toLowerCaseFn: JstlFn.toLowerCaseFn = (a) => {
     return a?.toLowerCase();
 };
 
@@ -188,7 +188,7 @@ export const toLowerCaseFn: jstlFn.toLowerCaseFn = (a) => {
  * @example
  * Product name: ${fn.UpperCase(product.name)}
  */
-export const toUpperCaseFn: jstlFn.toUpperCaseFn = (a) => {
+export const toUpperCaseFn: JstlFn.toUpperCaseFn = (a) => {
     return a?.toUpperCase();
 };
 
@@ -199,6 +199,6 @@ export const toUpperCaseFn: jstlFn.toUpperCaseFn = (a) => {
  * @example
  * Name: ${fn.trim(name)}
  */
-export const trimFn: jstlFn.trimFn = (input) => {
+export const trimFn: JstlFn.trimFn = (input) => {
     return input.trim();
 };

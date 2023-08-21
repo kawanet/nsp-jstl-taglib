@@ -4,7 +4,7 @@
  *
  * JSTL 1.1 functions library
  */
-export declare namespace jstlFn {
+export declare namespace JstlFn {
     type fnFunctions = {
         contains: containsFn;
         containsIgnoreCase: containsIgnoreCaseFn;

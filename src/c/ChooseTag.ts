@@ -5,7 +5,7 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import type {jstlC} from "../index.js";
+import type {JstlC} from "../index.js";
 
 const enum s {
     START = 1,
@@ -36,7 +36,7 @@ const isTrue = (value: any) => (!!value && value !== "false");
 /**
  * <c:choose><c:when test=""></c:when><c:otherwise></c:otherwise></c:choose>
  */
-export const chooseTag: NSP.TagFn<jstlC.ChooseTagAttr> = tag => {
+export const chooseTag: NSP.TagFn<JstlC.ChooseTagAttr> = tag => {
     return context => {
         const stack = getStack(tag.conf, context);
         stack.unshift(s.START);
@@ -51,7 +51,7 @@ export const chooseTag: NSP.TagFn<jstlC.ChooseTagAttr> = tag => {
     };
 };
 
-export const whenTag: NSP.TagFn<jstlC.WhenTagAttr> = tag => {
+export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = tag => {
     return context => {
         const stack = getStack(tag.conf, context);
         if (!stack.length) {
@@ -68,7 +68,7 @@ export const whenTag: NSP.TagFn<jstlC.WhenTagAttr> = tag => {
     }
 };
 
-export const otherwiseTag: NSP.TagFn<jstlC.OtherwiseTagAttr> = tag => {
+export const otherwiseTag: NSP.TagFn<JstlC.OtherwiseTagAttr> = tag => {
     return context => {
         const stack = getStack(tag.conf, context);
         if (!stack.length) {

@@ -1,9 +1,9 @@
 /**
  * @see https://github.com/apache/tomcat-taglibs-standard/blob/main/impl/src/main/resources/META-INF/fmt.tld
  */
-import type {jstlFmt} from "./index.js";
+import type {JstlFmt} from "./index.js";
 
-export const _fmtTags: jstlFmt.fmtTags = {
+export const _fmtTags: JstlFmt.fmtTags = {
     requestEncoding: null, // TODO
     setLocale: null, // TODO
     timeZone: null, // TODO

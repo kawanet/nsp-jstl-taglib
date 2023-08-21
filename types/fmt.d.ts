@@ -6,7 +6,7 @@ import type {NSP} from "nsp-server-pages";
  *
  * JSTL 1.1 i18n-capable formatting library
  */
-export declare namespace jstlFmt {
+export declare namespace JstlFmt {
     type fmtTags = {
         requestEncoding: NSP.TagFn<RequestEncodingTagAttr>;
         setLocale: NSP.TagFn<SetLocaleTagAttr>;

@@ -3,12 +3,12 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import type {jstlC} from "../index.js";
+import type {JstlC} from "../index.js";
 
 /**
  * <c:set var="${var}" value="${value}"/>
  */
-export const setTag: NSP.TagFn<jstlC.SetTagAttr> = tag => {
+export const setTag: NSP.TagFn<JstlC.SetTagAttr> = tag => {
     return context => {
         const attr = tag.attr(context);
         const key = attr.var;

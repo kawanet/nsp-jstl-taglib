@@ -6,11 +6,11 @@ import {_cTags} from "./_cTags.js";
 import {_fmtTags} from "./_fmtTags.js";
 import {_fnFunctions} from "./_fnFunctions.js";
 
-import type {jstlC} from "../types/c.js";
-import type {jstlFmt} from "../types/fmt.js";
-import type {jstlFn} from "../types/fn.js";
+import type {JstlC} from "../types/c.js";
+import type {JstlFmt} from "../types/fmt.js";
+import type {JstlFn} from "../types/fn.js";
 
-export type {jstlC, jstlFmt, jstlFn};
+export type {JstlC, JstlFmt, JstlFn};
 
 export const cTags = _cTags;
 
