@@ -8,13 +8,25 @@ import type {JstlC} from "../index.js";
 
 const isFalse = (value: any) => (value === false || value === "false");
 
+const isPromise = (v: any): v is Promise<any> => v && (typeof v.then === "function");
+
+const isEmpty = (v: any): boolean => (v == null || v === "");
+
+const trim = (v: string): string => (("string" === typeof v) ? v.trim() : v);
+
 export const outTag: NSP.TagFn<JstlC.OutTagAttr> = tag => {
     return context => {
         const attr = tag.attr(context);
         const {value, escapeXml} = attr;
-        const out = value ?? attr.default ?? "";
 
-        // default is true
-        return isFalse(escapeXml) ? out : $$(out);
+        const filter = (v: string) => (v != null && !isFalse(escapeXml)) ? $$(v) : v;
+
+        const result = (v: string | Promise<string>) => isPromise(v) ? v.then(trim).then(filter) : filter(trim(v));
+
+        if (!isEmpty(value)) return result(value);
+
+        if (!isEmpty(attr.default)) return result(attr.default);
+
+        return result(tag.body(context));
     };
 };

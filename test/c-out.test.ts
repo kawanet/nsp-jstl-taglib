@@ -1,4 +1,5 @@
 import {strict as assert} from "assert";
+import {promises as fs} from "fs";
 import {createNSP} from "nsp-server-pages";
 import {cTags} from "../src/index.js";
 
@@ -42,5 +43,18 @@ describe(TITLE, () => {
         const fn = nsp.parse(src).toFn<Context>();
 
         assert.equal(fn({foo: "<XSS>"}), "[<XSS>]");
+    });
+
+    /**
+     * @see https://github.com/apache/tomcat-taglibs-standard/blob/main/standard-test/src/test/java/org/apache/taglibs/standard/tag/el/core/TestOutTag.java
+     */
+    it(`TestOutTag`, async () => {
+        nsp.options.indent = 4;
+        nsp.options.trimSpaces = false;
+
+        const render = await nsp.loadJSP("test/resources/TestOutTag.jsp");
+        const result = await render({cats: "cats & dogs", dogs: "cats & dogs"});
+        const expected = await fs.readFile("test/resources/TestOutTag.txt", "utf8");
+        assert.equal(result, expected);
     });
 });
