@@ -13,12 +13,24 @@ import {ifTag} from "./c/IfTag.js";
 import {importTag} from "./c/ImportTag.js";
 import {otherwiseTag} from "./c/OtherwiseTag.js";
 import {outTag} from "./c/OutTag.js";
-import {paramTag} from "./c/ParamTag.js";
+import {paramTag as c_paramTag} from "./c/ParamTag.js";
 import {redirectTag} from "./c/RedirectTag.js";
 import {removeTag} from "./c/RemoveTag.js";
 import {setTag} from "./c/SetTag.js";
 import {urlTag} from "./c/UrlTag.js";
 import {whenTag} from "./c/WhenTag.js";
+import {bundleTag} from "./fmt/BundleTag.js";
+import {formatDateTag} from "./fmt/FormatDateTag.js";
+import {formatNumberTag} from "./fmt/FormatNumberTag.js";
+import {messageTag} from "./fmt/MessageTag.js";
+import {parseDateTag} from "./fmt/ParseDateTag.js";
+import {parseNumberTag} from "./fmt/ParseNumberTag.js";
+import {requestEncodingTag} from "./fmt/RequestEncodingTag.js";
+import {setBundleTag} from "./fmt/SetBundleTag.js";
+import {setLocaleTag} from "./fmt/SetLocaleTag.js";
+import {setTimeZoneTag} from "./fmt/SetTimeZoneTag.js";
+import {timeZoneTag} from "./fmt/TimeZoneTag.js";
+import {paramTag as fmt_paramTag} from "./fmt/ParamTag.js";
 import * as fn from "./fn/Functions.js";
 
 export type {JstlC, JstlFmt, JstlFn};
@@ -32,7 +44,7 @@ export const cTags: JstlC.cTags = {
     forTokens: forTokensTag,
     out: outTag,
     otherwise: otherwiseTag,
-    param: paramTag,
+    param: c_paramTag,
     redirect: redirectTag,
     remove: removeTag,
     set: setTag,
@@ -41,18 +53,18 @@ export const cTags: JstlC.cTags = {
 };
 
 export const fmtTags: JstlFmt.fmtTags = {
-    requestEncoding: null, // TODO
-    setLocale: null, // TODO
-    timeZone: null, // TODO
-    setTimeZone: null, // TODO
-    bundle: null, // TODO
-    setBundle: null, // TODO
-    message: null, // TODO
-    param: null, // TODO
-    formatNumber: null, // TODO
-    parseNumber: null, // TODO
-    formatDate: null, // TODO
-    parseDate: null, // TODO
+    requestEncoding: requestEncodingTag,
+    setLocale: setLocaleTag,
+    timeZone: timeZoneTag,
+    setTimeZone: setTimeZoneTag,
+    bundle: bundleTag,
+    setBundle: setBundleTag,
+    message: messageTag,
+    param: fmt_paramTag,
+    formatNumber: formatNumberTag,
+    parseNumber: parseNumberTag,
+    formatDate: formatDateTag,
+    parseDate: parseDateTag,
 };
 
 export const fnFunctions: JstlFn.fnFunctions = {
