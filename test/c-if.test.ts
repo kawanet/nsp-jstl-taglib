@@ -16,15 +16,17 @@ describe(TITLE, () => {
         const src = '[<c:if test="true">TRUE</c:if>]';
         // console.warn(nsp.parseJSP(src).toJS());
         const fn = nsp.parse(src).toFn();
+        const ctx = {};
 
-        assert.equal(fn(), "[TRUE]");
+        assert.equal(fn(ctx), "[TRUE]");
     });
 
     it("false", async () => {
         const src = '[<c:if test="false">TRUE</c:if>]';
         const fn = nsp.parse(src).toFn();
+        const ctx = {};
 
-        assert.equal(fn(), "[]");
+        assert.equal(fn(ctx), "[]");
     });
 
     it("${pn > 2}", async () => {
