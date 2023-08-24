@@ -1,5 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
+import {getParamData} from "./ParamTag.js";
 
 type Properties = JstlFmt.Properties;
 
@@ -61,7 +62,16 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
             }
         }
 
+        const {stack} = getParamData(tag.app, context);
+        stack.unshift([]);
+
         await tag.body(context);
+
+        const params = stack.shift();
+
+        if (message && params.length) {
+            message = message.replace(/\{(\d+)}/g, (_, $1) => (params[+$1] ?? ""));
+        }
 
         return message;
     };
