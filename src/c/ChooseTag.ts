@@ -39,7 +39,7 @@ export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = tag => {
     return context => {
         const {stack} = tag.app.store(context, storeKey, initFn);
         if (!stack.length) {
-            throw new Error(`WHEN_OUTSIDE_CHOOSE`);
+            throw new Error(`<c:when> must be inside <c:choose>`);
         }
 
         if (stack[0] !== s.DONE) {
