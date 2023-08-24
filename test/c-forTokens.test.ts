@@ -23,4 +23,10 @@ describe(TITLE, () => {
         // console.warn(nsp.parse(src).toJS());
         assert.equal(nsp.parse(src).toFn()({}), "[B][D]");
     });
+
+    it('<c:forTokens varStatus="status">', async () => {
+        const src: string = '<c:forTokens items="A,B,C,D,E" delims="," varStatus="status" begin="1" end="3" step="2">[${ status.index }]</c:forTokens>';
+        // console.warn(nsp.parse(src).toJS());
+        assert.equal(nsp.parse(src).toFn()({}), "[1][3]");
+    });
 });

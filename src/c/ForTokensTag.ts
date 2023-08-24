@@ -1,5 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
+import {LoopTagStatus} from "./lib/LoopTagStatus.js";
 
 /**
  * <c:forTokens>
@@ -13,18 +14,20 @@ export const forTokensTag: NSP.TagFn<JstlC.ForTokensTagAttr> = (tag) => {
     return (context) => {
         const attr = tag.attr(context);
 
-        const array = attr.items?.split(attr.delims);
-        if (!array.length) return;
+        const items = attr.items?.split(attr.delims);
+        if (!items.length) return;
 
-        const begin = +attr.begin || 0;
-        const end = +attr.end || array.length - 1;
-        const step = +attr.step || 1;
+        const {begin, end, step, varStatus} = attr;
         const varName = attr.var;
+
+        const status = new LoopTagStatus({items, begin, end, step});
+        if (varStatus) context[varStatus] = status;
 
         const results: (string | Promise<string>)[] = [];
 
-        for (let i = begin; i <= end; i += step) {
-            context[varName] = array[i];
+        while (!status.isLast()) {
+            const item = status.next();
+            if (varName) context[varName] = item;
             const result = tag.body(context);
             results.push(result);
         }

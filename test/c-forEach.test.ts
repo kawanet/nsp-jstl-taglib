@@ -42,4 +42,10 @@ describe(TITLE, () => {
         // console.warn(nsp.parse(src).toJS());
         assert.equal(nsp.parse(src).toFn()(ctx), "[Bar][Qux]");
     });
+
+    it('<c:forEach varStatus="status">', async () => {
+        const src: string = '<c:forEach items="${list}" varStatus="status" begin="1" end="3" step="2">[${ status.index }]</c:forEach>';
+        // console.warn(nsp.parse(src).toJS());
+        assert.equal(nsp.parse(src).toFn()(ctx), "[1][3]");
+    });
 });

@@ -142,7 +142,7 @@ export declare namespace JstlC {
         /**
          * Collection of items to iterate over.
          */
-        items?: string;
+        items?: any[];
 
         /**
          * If items specified:
