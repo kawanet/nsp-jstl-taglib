@@ -13,7 +13,7 @@ import {getParamData} from "./ParamTag.js";
 
 export const importTag: NSP.TagFn<JstlC.ImportTagAttr> = (tag) => {
     return async (context) => {
-        const data = getParamData(tag.app, context);
+        const {stack} = getParamData(tag.app, context);
         const attr = tag.attr(context);
         const varName = attr.var;
 
@@ -21,9 +21,10 @@ export const importTag: NSP.TagFn<JstlC.ImportTagAttr> = (tag) => {
         const defaultParams = /\?/.test(url) ? url.replace(/.*\?/, "") : "";
         url = url.replace(/\?.*/, "");
 
-        const params = data.params = new URLSearchParams(defaultParams);
+        const params = new URLSearchParams(defaultParams);
+        stack.unshift(params);
         await tag.body(context);
-        delete data.params;
+        stack.shift();
 
         const newParams = params.toString();
         if (newParams) {

@@ -11,8 +11,8 @@ import {getParamData} from "./ParamTag.js";
  */
 
 export const urlTag: NSP.TagFn<JstlC.UrlTagAttr> = (tag) => {
-    return (context) => {
-        const data = getParamData(tag.app, context);
+    return async (context) => {
+        const {stack} = getParamData(tag.app, context);
         const attr = tag.attr(context);
         const varName = attr.var;
 
@@ -20,9 +20,10 @@ export const urlTag: NSP.TagFn<JstlC.UrlTagAttr> = (tag) => {
         const defaultParams = /\?/.test(url) ? url.replace(/.*\?/, "") : "";
         url = url.replace(/\?.*/, "");
 
-        const params = data.params = new URLSearchParams(defaultParams);
-        tag.body(context);
-        delete data.params;
+        const params = new URLSearchParams(defaultParams);
+        stack.unshift(params);
+        await tag.body(context);
+        stack.shift();
 
         const newParams = params.toString();
         if (newParams) {

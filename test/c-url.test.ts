@@ -22,7 +22,7 @@ describe(TITLE, () => {
         const render = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {}
-        const result = render(ctx);
+        const result = await render(ctx);
 
         assert.equal(result, `[][/foo]`);
     });
@@ -33,7 +33,7 @@ describe(TITLE, () => {
         const render = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {}
-        const result = render(ctx);
+        const result = await render(ctx);
 
         assert.equal(result, `[][/foo?bar=BAR&buz=BUZ]`);
     });

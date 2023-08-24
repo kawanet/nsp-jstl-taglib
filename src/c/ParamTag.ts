@@ -4,10 +4,10 @@ import type {JstlC} from "../index.js";
 const storeKey = "c:param";
 
 interface ParamData {
-    params?: URLSearchParams;
+    stack: URLSearchParams[];
 }
 
-const initFn = (): ParamData => ({});
+const initFn = (): ParamData => ({stack: []});
 
 export const getParamData = (app: NSP.App, context: any) => {
     return app.store(context, storeKey, initFn);
@@ -24,7 +24,9 @@ export const getParamData = (app: NSP.App, context: any) => {
 export const paramTag: NSP.TagFn<JstlC.ParamTagAttr> = (tag) => {
     return (context) => {
         const {name, value} = tag.attr(context);
-        const {params} = getParamData(tag.app, context);
+        const {stack} = getParamData(tag.app, context);
+        const params = stack.at(0);
+
         if (!params) throw new Error("<c:param> must be nested inside <c:import> or <c:url> tag.");
 
         params.set(name, value);
