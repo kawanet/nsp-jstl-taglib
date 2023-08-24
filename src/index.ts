@@ -5,29 +5,35 @@
 import type {JstlC} from "../types/c.js";
 import type {JstlFmt} from "../types/fmt.js";
 import type {JstlFn} from "../types/fn.js";
+import {catchTag} from "./c/CatchTag.js";
 import {chooseTag, otherwiseTag, whenTag} from "./c/ChooseTag.js";
+import {forEachTag} from "./c/ForEachTag.js";
+import {forTokensTag} from "./c/ForTokensTag.js";
 import {ifTag} from "./c/IfTag.js";
+import {importTag, paramTag} from "./c/ImportTag.js";
 import {outTag} from "./c/OutTag.js";
+import {redirectTag} from "./c/RedirectTag.js";
 import {removeTag} from "./c/RemoveTag.js";
 import {setTag} from "./c/SetTag.js";
+import {urlTag} from "./c/UrlTag.js";
 import * as fn from "./fn/Functions.js";
 
 export type {JstlC, JstlFmt, JstlFn};
 
 export const cTags: JstlC.cTags = {
-    catch: null, // TODO
+    catch: catchTag,
     choose: chooseTag,
     if: ifTag,
-    import: null, // TODO
-    forEach: null, // TODO
-    forTokens: null, // TODO
+    import: importTag,
+    forEach: forEachTag,
+    forTokens: forTokensTag,
     out: outTag,
     otherwise: otherwiseTag,
-    param: null, // TODO
-    redirect: null, // TODO
+    param: paramTag,
+    redirect: redirectTag,
     remove: removeTag,
     set: setTag,
-    url: null, // TODO
+    url: urlTag,
     when: whenTag,
 };
 
