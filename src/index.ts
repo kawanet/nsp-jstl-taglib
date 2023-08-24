@@ -8,6 +8,7 @@ import type {JstlFn} from "../types/fn.js";
 import {chooseTag, otherwiseTag, whenTag} from "./c/ChooseTag.js";
 import {ifTag} from "./c/IfTag.js";
 import {outTag} from "./c/OutTag.js";
+import {removeTag} from "./c/RemoveTag.js";
 import {setTag} from "./c/SetTag.js";
 import * as fn from "./fn/Functions.js";
 
@@ -24,7 +25,7 @@ export const cTags: JstlC.cTags = {
     otherwise: otherwiseTag,
     param: null, // TODO
     redirect: null, // TODO
-    remove: null, // TODO
+    remove: removeTag,
     set: setTag,
     url: null, // TODO
     when: whenTag,
