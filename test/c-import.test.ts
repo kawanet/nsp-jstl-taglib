@@ -24,7 +24,7 @@ describe(TITLE, () => {
 
     it("<c:import/>", async () => {
         const src: string = '<c:import url="/foo"/>';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {}
@@ -35,7 +35,7 @@ describe(TITLE, () => {
 
     it("<c:import><c:param/></c:import>", async () => {
         const src: string = '<c:import url="/foo?bar=BAR"><c:param name="buz" value="BUZ"/></c:import>';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {}

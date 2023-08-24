@@ -17,7 +17,7 @@ describe(TITLE, () => {
 
     it("value", async () => {
         const src = '[<c:out value="${foo}"/>]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const fn = nsp.parse(src).toFn<Context>();
 
         assert.equal(fn({foo: "FOO"}), "[FOO]");

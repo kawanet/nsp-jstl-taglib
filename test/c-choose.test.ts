@@ -14,7 +14,7 @@ describe(TITLE, () => {
 
     it("<c:choose></c:choose>", async () => {
         const src: string = '[<c:choose><c:when test="${foo}">FOO</c:when><c:otherwise>BAR</c:otherwise></c:choose>]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
 
         const fn = nsp.parse(src).toFn();
 

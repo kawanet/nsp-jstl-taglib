@@ -14,7 +14,7 @@ describe(TITLE, () => {
 
     it("true", async () => {
         const src = '[<c:if test="true">TRUE</c:if>]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const fn = nsp.parse(src).toFn();
         const ctx = {};
 

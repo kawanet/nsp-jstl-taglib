@@ -16,7 +16,7 @@ describe(TITLE, () => {
 
     it("<c:remove>", async () => {
         const src: string = '[<c:remove var="foo"/>]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const fn = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {foo: "FOO"};

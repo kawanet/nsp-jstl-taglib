@@ -18,7 +18,7 @@ describe(TITLE, () => {
 
     it("<c:url/>", async () => {
         const src: string = '[<c:url var="url" value="/foo"/>][${url}]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {}
@@ -29,7 +29,7 @@ describe(TITLE, () => {
 
     it("<c:url><c:param/></c:url>", async () => {
         const src: string = '[<c:url var="url" value="/foo?bar=BAR"><c:param name="buz" value="BUZ"/></c:url>][${url}]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
 
         const ctx: Context = {}

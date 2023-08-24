@@ -16,7 +16,7 @@ describe(TITLE, () => {
         type Context = { foo?: string };
 
         const src = '<c:set var="foo" value="FOO"/>[${foo}]';
-        // console.warn(nsp.parseJSP(src).toJS());
+        // console.warn(nsp.parse(src).toJS());
         const fn = nsp.parse(src).toFn<Context>();
 
         assert.equal(fn({}), "[FOO]");
