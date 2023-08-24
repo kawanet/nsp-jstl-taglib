@@ -56,27 +56,27 @@ describe(TITLE, () => {
 
         const {utc} = ctx;
         let tz: string;
-        ctx.pattern = "yyyy-MM-dd'T'HH:mm:ss";
-        const fmt = "[%Y-%m-%dT%H:%M:%S]";
+        ctx.pattern = "yyyy-MM-dd'T'HH:mm:ssXXX";
+        const fmt = "[%Y-%m-%dT%H:%M:%S%:z]";
         let expected: string;
 
         ctx.tz = tz = "GMT";
-        expected = "[2023-04-05T06:07:08]";
+        expected = "[2023-04-05T06:07:08+00:00]";
         assert.equal(cdate().utc().cdateFn()(utc).text(fmt), expected, `utc()`);
         assert.equal(await render(ctx), expected, tz);
 
         ctx.tz = tz = "Asia/Tokyo";
-        expected = "[2023-04-05T15:07:08]";
+        expected = "[2023-04-05T15:07:08+09:00]";
         assert.equal(cdate().tz(tz).cdateFn()(utc).text(fmt), expected, `tz(${tz})`);
         assert.equal(await render(ctx), expected, tz);
 
         ctx.tz = tz = "GMT+12:00";
-        expected = "[2023-04-05T18:07:08]";
+        expected = "[2023-04-05T18:07:08+12:00]";
         assert.equal(cdate().utcOffset(tz).cdateFn()(utc).text(fmt), expected, `utcOffset(${tz})`);
         assert.equal(await render(ctx), expected, tz);
 
         ctx.tz = tz = "GMT-12:00";
-        expected = "[2023-04-04T18:07:08]";
+        expected = "[2023-04-04T18:07:08-12:00]";
         assert.equal(cdate().utcOffset(tz).cdateFn()(utc).text(fmt), expected, `utcOffset(${tz})`);
         assert.equal(await render(ctx), expected, tz);
     });
