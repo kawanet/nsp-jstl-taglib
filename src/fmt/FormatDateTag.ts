@@ -2,6 +2,7 @@ import {cdate} from "cdate";
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
+import {getSetTimeZoneData} from "./TimeZoneTag.js";
 
 const isTimeZone = (tz: any): tz is TimeZone => ("function" === typeof tz?.getDisplayName);
 
@@ -18,7 +19,15 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         const {value, var: varName, pattern, type, dateStyle, timeStyle, timeZone} = tag.attr(context);
         if (!value) throw new Error(`<fmt:formatDate> requires a "value" attribute`);
 
-        const tz = timeZone && (isTimeZone(timeZone) ? timeZone : TimeZone.getTimeZone(timeZone));
+        let tz: TimeZone;
+        if (isTimeZone(timeZone)) {
+            tz = timeZone;
+        } else if (timeZone) {
+            tz = TimeZone.getTimeZone(timeZone);
+        } else {
+            const {stack} = getSetTimeZoneData(tag.app, context);
+            tz = stack[0];
+        }
 
         const dt = tz ? tz.cdate(value) : cdate(value);
         let result: string;
