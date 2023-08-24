@@ -33,7 +33,7 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         let result: string;
 
         if (pattern) {
-            result = dt.handler(formatMap).format(pattern);
+            result = applyPattern(dt, pattern);
         } else {
             const format = getFormat(type, dateStyle, timeStyle);
             result = dt.text(format);
@@ -45,6 +45,21 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
             return result;
         }
     };
+};
+
+const applyPattern = (dt: cdate.CDate, pattern: string): string => {
+    if (/'/.test(pattern)) {
+        return pattern.split(/'/).map((part, index) => {
+            if (index & 1) {
+                // quoted
+                return (part === "") ? "'" : part;
+            } else {
+                return (part === "") ? "" : applyPattern(dt, part);
+            }
+        }).join("");
+    }
+
+    return dt.handler(formatMap).format(pattern);
 };
 
 const G: cdate.Handler = dt => (dt.getFullYear() < 0 ? "BC" : "AD");
