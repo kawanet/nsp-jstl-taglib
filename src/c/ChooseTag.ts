@@ -12,24 +12,13 @@ const enum s {
     DONE = 2,
 }
 
-interface Conf {
-    key: string;
+interface Data {
+    stack: s[];
 }
 
-const getStack = (conf: Conf, context: any): number[] => {
-    if (context == null) throw new Error(`null context not supported`);
+const storeKey = "c:choose";
 
-    if (typeof context !== "object") throw new Error(`context must be an object`);
-
-    const key = conf?.key || "#c:choose";
-
-    return ((context as any)[key] || ((context as any)[key] = []));
-};
-
-const removeStack = (conf: Conf, context: any): void => {
-    const key = conf?.key || "#c:choose";
-    delete (context as any)[key];
-};
+const initFn = (): Data => ({stack: []});
 
 const isTrue = (value: any) => (!!value && value !== "false");
 
@@ -38,22 +27,17 @@ const isTrue = (value: any) => (!!value && value !== "false");
  */
 export const chooseTag: NSP.TagFn<JstlC.ChooseTagAttr> = tag => {
     return context => {
-        const stack = getStack(tag.conf, context);
+        const {stack} = tag.app.store(context, storeKey, initFn);
         stack.unshift(s.START);
         const result = tag.body(context);
         stack.shift();
-
-        if (!stack.length) {
-            removeStack(tag.conf, context);
-        }
-
         return result;
     };
 };
 
 export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = tag => {
     return context => {
-        const stack = getStack(tag.conf, context);
+        const {stack} = tag.app.store(context, storeKey, initFn);
         if (!stack.length) {
             throw new Error(`WHEN_OUTSIDE_CHOOSE`);
         }
@@ -70,7 +54,7 @@ export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = tag => {
 
 export const otherwiseTag: NSP.TagFn<JstlC.OtherwiseTagAttr> = tag => {
     return context => {
-        const stack = getStack(tag.conf, context);
+        const {stack} = tag.app.store(context, storeKey, initFn);
         if (!stack.length) {
             throw new Error(`<c:otherwise> must be inside <c:choose>`);
         }
