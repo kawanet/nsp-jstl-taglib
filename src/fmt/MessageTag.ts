@@ -1,6 +1,20 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 
+type Properties = JstlFmt.Properties;
+
+const storeKey = "fmt:message";
+
+interface MessageData {
+    stack: Properties[];
+}
+
+const initFn = (): MessageData => ({stack: []});
+
+export const getMessageData = (app: NSP.App, context: any) => {
+    return app.store(context, storeKey, initFn);
+};
+
 /**
  * <fmt:message>
  * org.apache.taglibs.standard.tag.rt.fmt.MessageTag
@@ -8,8 +22,39 @@ import type {JstlFmt} from "../index.js";
  * @description
  * Maps key to localized message and performs parametric replacement
  */
-export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (_) => {
-    return (_) => {
-        throw new Error("Not implemented: <fmt:message>");
+export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
+    return (context) => {
+        const {key, bundle, var: varName} = tag.attr(context);
+
+        if (bundle) {
+            /**
+             * @example
+             * <fmt:setBundle basename="bundled" var="bundled"/>
+             * <fmt:message key="key" bundle="${bundled}"/>
+             */
+            return bundle[key];
+        } else if (varName) {
+            /**
+             * @example
+             * <fmt:setBundle basename="messages" var="bundled"/>
+             * <fmt:message key="key" var="bundled"/>
+             */
+            const properties = context[varName];
+            if (!properties) throw new Error(`Properties not set at "${varName}"`);
+            return properties[key];
+        } else {
+            /**
+             * @example
+             * <fmt:bundle basename="messages"/>
+             * <fmt:message key="key"/>
+             * </fmt:bundle>
+             */
+            const {stack} = getMessageData(tag.app, context);
+            if (!stack.length) throw new Error("Properties not set at <fmt:bundle> tag.");
+
+            for (const properties of stack) {
+                if (properties[key] != null) return properties[key];
+            }
+        }
     };
 };

@@ -22,6 +22,8 @@ export declare namespace JstlFmt {
         parseDate: NSP.TagFn<ParseDateTagAttr>;
     };
 
+    type Properties = { [key: string]: any };
+
     /**
      * <fmt:requestEncoding>
      * org.apache.taglibs.standard.tag.rt.fmt.RequestEncodingTag
@@ -201,7 +203,7 @@ export declare namespace JstlFmt {
          * Localization context in whose resource
          * bundle the message key is looked up.
          */
-        bundle?: string;
+        bundle?: Properties;
 
         /**
          * Name of the exported scoped variable
