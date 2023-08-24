@@ -43,8 +43,8 @@ describe(TITLE, () => {
         const src: string = '[<fmt:setBundle basename="${basename}" var="bundled"/>][<fmt:message key="item.name" bundle="${bundled}"/>]';
         // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(render({basename: "foo"}), `[][Foo]`);
-        assert.equal(render({basename: "bar"}), `[][Bar]`);
+        assert.equal(await render({basename: "foo"}), `[][Foo]`);
+        assert.equal(await render({basename: "bar"}), `[][Bar]`);
     });
 
     /**
@@ -56,8 +56,8 @@ describe(TITLE, () => {
         const src: string = '[<fmt:setBundle basename="${basename}" var="bundled"/>][<fmt:message key="item.name" var="bundled"/>]';
         // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(render({basename: "foo"}), `[][Foo]`);
-        assert.equal(render({basename: "bar"}), `[][Bar]`);
+        assert.equal(await render({basename: "foo"}), `[][Foo]`);
+        assert.equal(await render({basename: "bar"}), `[][Bar]`);
     });
 
     /**
@@ -70,8 +70,8 @@ describe(TITLE, () => {
         const src: string = '<fmt:bundle basename="${basename}">[<fmt:message key="item.name"/>]</fmt:bundle>';
         // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(render({basename: "foo"}), `[Foo]`);
-        assert.equal(render({basename: "bar"}), `[Bar]`);
+        assert.equal(await render({basename: "foo"}), `[Foo]`);
+        assert.equal(await render({basename: "bar"}), `[Bar]`);
     });
 
     /**
@@ -84,8 +84,8 @@ describe(TITLE, () => {
         const src: string = '<fmt:bundle basename="foo"><fmt:bundle basename="bar">[<fmt:message key="${key}"/>]</fmt:bundle></fmt:bundle>';
         // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(render({key: "item.name"}), `[Bar]`);
-        assert.equal(render({key: "only.bar"}), `[BAR]`);
-        assert.equal(render({key: "only.foo"}), `[FOO]`);
+        assert.equal(await render({key: "item.name"}), `[Bar]`);
+        assert.equal(await render({key: "only.bar"}), `[BAR]`);
+        assert.equal(await render({key: "only.foo"}), `[FOO]`);
     });
 });

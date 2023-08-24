@@ -23,8 +23,9 @@ export const getMessageData = (app: NSP.App, context: any) => {
  * Maps key to localized message and performs parametric replacement
  */
 export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
-    return (context) => {
+    return async (context) => {
         const {key, bundle, var: varName} = tag.attr(context);
+        let message: string;
 
         if (bundle) {
             /**
@@ -32,7 +33,7 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * <fmt:setBundle basename="bundled" var="bundled"/>
              * <fmt:message key="key" bundle="${bundled}"/>
              */
-            return bundle[key];
+            message = bundle[key];
         } else if (varName) {
             /**
              * @example
@@ -41,7 +42,7 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              */
             const properties = context[varName];
             if (!properties) throw new Error(`Properties not set at "${varName}"`);
-            return properties[key];
+            message = properties[key];
         } else {
             /**
              * @example
@@ -53,8 +54,15 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
             if (!stack.length) throw new Error("Properties not set at <fmt:bundle> tag.");
 
             for (const properties of stack) {
-                if (properties[key] != null) return properties[key];
+                if (properties[key] != null) {
+                    message = properties[key];
+                    break;
+                }
             }
         }
+
+        await tag.body(context);
+
+        return message;
     };
 };
