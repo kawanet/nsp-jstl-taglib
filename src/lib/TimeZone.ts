@@ -1,10 +1,15 @@
 import {cdate} from "cdate";
+import type {JstlFmt} from "../index.js";
 
-export abstract class TimeZone {
+const isTimeZone = (tz: any): tz is JstlFmt.TimeZone => ("function" === typeof tz?.getDisplayName);
+
+export abstract class TimeZone implements JstlFmt.TimeZone {
     protected displayName: string;
 
-    static getTimeZone(id: string): TimeZone {
-        if (/^GMT|^(?:GMT)?([+-])(\d+)(?::(\d+))?/.test(id)) {
+    static getTimeZone(id: string | JstlFmt.TimeZone): JstlFmt.TimeZone {
+        if (isTimeZone(id)) {
+            return id;
+        } else if (/^GMT|^(?:GMT)?([+-])(\d+)(?::(\d+))?/.test(id)) {
             return new TimeZoneByOffset(id);
         } else {
             return new TimeZoneByName(id);
@@ -13,10 +18,6 @@ export abstract class TimeZone {
 
     constructor(id: string) {
         this.displayName = id;
-    }
-
-    cdate(dt: number | Date | string): cdate.CDate {
-        return this.cdateFn()(dt);
     }
 
     protected abstract cdateFn(): cdate.cdate;

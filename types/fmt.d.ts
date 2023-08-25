@@ -24,6 +24,10 @@ export declare namespace JstlFmt {
 
     type Properties = { [key: string]: any };
 
+    interface TimeZone {
+        getOffset(date: number | Date): number;
+    }
+
     /**
      * <fmt:requestEncoding>
      * org.apache.taglibs.standard.tag.rt.fmt.RequestEncodingTag
@@ -91,7 +95,7 @@ export declare namespace JstlFmt {
          * java.util.TimeZone for more information on
          * supported time zone formats.
          */
-        value: string;
+        value: string | TimeZone;
     }
 
     /**
@@ -111,7 +115,7 @@ export declare namespace JstlFmt {
          * more information on supported time zone
          * formats.
          */
-        value: string;
+        value: string | TimeZone;
 
         /**
          * Name of the exported scoped variable which
@@ -381,7 +385,7 @@ export declare namespace JstlFmt {
         /**
          * Date and/or time to be formatted.
          */
-        value: string;
+        value: number | Date;
 
         /**
          * Specifies whether the time, the date, or both
@@ -419,7 +423,7 @@ export declare namespace JstlFmt {
          * Time zone in which to represent the formatted
          * time.
          */
-        timeZone?: string;
+        timeZone?: string | TimeZone;
 
         /**
          * Name of the exported scoped variable which

@@ -13,7 +13,7 @@ export const setTimeZoneTag: NSP.TagFn<JstlFmt.SetTimeZoneTagAttr> = (tag) => {
     return (context) => {
         const {value, var: varName} = tag.attr(context);
 
-        let tz: TimeZone;
+        let tz: JstlFmt.TimeZone;
         if (value) {
             tz = TimeZone.getTimeZone(value);
         } else {

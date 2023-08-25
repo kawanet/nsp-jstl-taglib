@@ -5,7 +5,7 @@ import {TimeZone} from "../lib/TimeZone.js";
 const storeKey = "fmt:timeZone";
 
 interface ParamData {
-    stack: TimeZone[];
+    stack: JstlFmt.TimeZone[];
 }
 
 const initFn = (): ParamData => ({stack: []});

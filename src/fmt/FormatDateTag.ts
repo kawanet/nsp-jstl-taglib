@@ -5,8 +5,6 @@ import {TimeZone} from "../lib/TimeZone.js";
 import {getSetTimeZoneData} from "./TimeZoneTag.js";
 import {getSetLocaleData} from "./SetLocaleTag.js";
 
-const isTimeZone = (tz: any): tz is TimeZone => ("function" === typeof tz?.getDisplayName);
-
 /**
  * <fmt:formatDate>
  * org.apache.taglibs.standard.tag.rt.fmt.FormatDateTag
@@ -23,17 +21,19 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
             return tag.body(context);
         }
 
-        let tz: TimeZone;
-        if (isTimeZone(timeZone)) {
-            tz = timeZone;
-        } else if (timeZone) {
+        let tz: JstlFmt.TimeZone;
+        if (timeZone) {
             tz = TimeZone.getTimeZone(timeZone);
         } else {
             const {stack} = getSetTimeZoneData(tag.app, context);
             tz = stack[0];
         }
 
-        let dt = tz ? tz.cdate(value) : cdate(value);
+        let dt = cdate(value);
+        if (tz) {
+            const minutes = tz.getOffset(+dt) / 60000;
+            dt = dt.utcOffset(minutes);
+        }
 
         const {locale} = getSetLocaleData(tag.app, context);
         if (locale) {
