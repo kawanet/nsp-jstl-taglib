@@ -1,19 +1,12 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-import {getBundleData} from "./BundleTag.js";
+import {getBundleStore} from "./BundleTag.js";
+import {StackStore} from "../lib/StackStore.js";
 
 const UNDEFINED_KEY = "???";
 
-const storeKey = "fmt:message";
-
-interface MessageData {
-    stack: string[][];
-}
-
-const initFn = (): MessageData => ({stack: []});
-
-export const getMessageData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
+export const getMessageStore = (app: NSP.App, context: any) => {
+    return app.store(context, "fmt:message", () => new StackStore<string[]>());
 };
 
 /**
@@ -28,10 +21,10 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
         const attr = tag.attr(context);
         const {bundle, var: varName} = attr;
 
-        const {stack} = getMessageData(tag.app, context);
-        stack.unshift([]);
+        const store = getMessageStore(tag.app, context);
+        store.open([]);
         const body = await tag.body(context);
-        const params = stack.shift();
+        const params = store.close();
 
         // refer body as key if not specified
         const key = attr.key || body?.trim();
@@ -63,14 +56,10 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * <fmt:message key="key"/>
              * </fmt:bundle>
              */
-            const {stack} = getBundleData(tag.app, context);
-            if (stack) {
-                for (const properties of stack) {
-                    if (key in properties) {
-                        message = properties[key];
-                        break;
-                    }
-                }
+            const store = getBundleStore(tag.app, context);
+            const properties = store.find(prop => (key in prop));
+            if (properties) {
+                message = properties[key];
             }
         }
 

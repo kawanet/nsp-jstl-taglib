@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-import {getMessageData} from "./MessageTag.js";
+import {getMessageStore} from "./MessageTag.js";
 
 /**
  * <fmt:param>
@@ -13,14 +13,14 @@ import {getMessageData} from "./MessageTag.js";
 export const paramTag: NSP.TagFn<JstlFmt.ParamTagAttr> = (tag) => {
     return (context) => {
         const {value} = tag.attr(context);
-        const {stack} = getMessageData(tag.app, context);
+        const store = getMessageStore(tag.app, context);
+        const params = store.current();
 
         // PARAM_OUTSIDE_MESSAGE
-        if (!stack.length) {
+        if (!params) {
             throw new Error("<fmt:param> tag must be nested in <fmt:message> tag.");
         }
 
-        const params = stack.at(0);
         params.push(value);
 
         return tag.body(context);

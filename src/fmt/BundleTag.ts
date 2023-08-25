@@ -1,18 +1,11 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
+import {StackStore} from "../lib/StackStore.js";
 
 type Properties = JstlFmt.Properties;
 
-const storeKey = "fmt:bundle";
-
-interface BundleData {
-    stack: Properties[];
-}
-
-const initFn = (): BundleData => ({stack: []});
-
-export const getBundleData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
+export const getBundleStore = (app: NSP.App, context: any) => {
+    return app.store(context, "fmt:bundle", () => new StackStore<Properties>());
 };
 
 /**
@@ -33,15 +26,15 @@ export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
 
         let properties = tag.app.process<Properties>("fmt:bundle", basename);
 
-        const {stack} = getBundleData(tag.app, context);
+        const store = getBundleStore(tag.app, context);
 
         if (prefix) properties = filter(properties, prefix);
 
-        stack.unshift(properties);
+        store.open(properties);
 
         const body = await tag.body(context);
 
-        stack.shift();
+        store.close();
 
         return body;
     };
