@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {LoopTagStatus} from "./lib/LoopTagStatus.js";
+import {LoopTagStatus} from "../lib/LoopTagStatus.js";
 
 /**
  * <c:forTokens>
