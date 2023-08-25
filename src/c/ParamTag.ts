@@ -1,16 +1,9 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
+import {StackStore} from "../lib/StackStore.js";
 
-const storeKey = "c:param";
-
-interface ParamData {
-    stack: URLSearchParams[];
-}
-
-const initFn = (): ParamData => ({stack: []});
-
-export const getParamData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
+export const getParamStore = (app: NSP.App, context: any) => {
+    return app.store(context, "c:param", () => new StackStore<URLSearchParams>());
 };
 
 /**
@@ -23,8 +16,8 @@ export const getParamData = (app: NSP.App, context: any) => {
 export const paramTag: NSP.TagFn<JstlC.ParamTagAttr> = (tag) => {
     return (context) => {
         const {name, value} = tag.attr(context);
-        const {stack} = getParamData(tag.app, context);
-        const params = stack.at(0);
+        const store = getParamStore(tag.app, context);
+        const params = store.current();
 
         // PARAM_OUTSIDE_PARENT
         if (!params) {

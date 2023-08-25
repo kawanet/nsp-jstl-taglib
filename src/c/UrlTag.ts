@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {getParamData} from "./ParamTag.js";
+import {getParamStore} from "./ParamTag.js";
 
 /**
  * <c:url>
@@ -12,7 +12,7 @@ import {getParamData} from "./ParamTag.js";
 
 export const urlTag: NSP.TagFn<JstlC.UrlTagAttr> = (tag) => {
     return async (context) => {
-        const {stack} = getParamData(tag.app, context);
+        const store = getParamStore(tag.app, context);
         const attr = tag.attr(context);
         const varName = attr.var;
 
@@ -21,9 +21,9 @@ export const urlTag: NSP.TagFn<JstlC.UrlTagAttr> = (tag) => {
         url = url.replace(/\?.*/, "");
 
         const params = new URLSearchParams(defaultParams);
-        stack.unshift(params);
+        store.open(params);
         await tag.body(context);
-        stack.shift();
+        store.close();
 
         const newParams = params.toString();
         if (newParams) {
