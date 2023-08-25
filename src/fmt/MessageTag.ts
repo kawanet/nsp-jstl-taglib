@@ -1,13 +1,13 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-import {getParamData} from "./ParamTag.js";
+import {getBundleData} from "./BundleTag.js";
 
-type Properties = JstlFmt.Properties;
+const UNDEFINED_KEY = "???";
 
 const storeKey = "fmt:message";
 
 interface MessageData {
-    stack: Properties[];
+    stack: string[][];
 }
 
 const initFn = (): MessageData => ({stack: []});
@@ -15,8 +15,6 @@ const initFn = (): MessageData => ({stack: []});
 export const getMessageData = (app: NSP.App, context: any) => {
     return app.store(context, storeKey, initFn);
 };
-
-const UNDEFINED_KEY = "???";
 
 /**
  * <fmt:message>
@@ -27,7 +25,16 @@ const UNDEFINED_KEY = "???";
  */
 export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
     return async (context) => {
-        const {key, bundle, var: varName} = tag.attr(context);
+        const attr = tag.attr(context);
+        const {bundle, var: varName} = attr;
+
+        const {stack} = getMessageData(tag.app, context);
+        stack.unshift([]);
+        const body = await tag.body(context);
+        const params = stack.shift();
+
+        // refer body as key if not specified
+        const key = attr.key || body?.trim();
         let message: string = UNDEFINED_KEY + key + UNDEFINED_KEY;
 
         if (bundle) {
@@ -56,7 +63,7 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * <fmt:message key="key"/>
              * </fmt:bundle>
              */
-            const {stack} = getMessageData(tag.app, context);
+            const {stack} = getBundleData(tag.app, context);
             if (stack) {
                 for (const properties of stack) {
                     if (key in properties) {
@@ -66,13 +73,6 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
                 }
             }
         }
-
-        const {stack} = getParamData(tag.app, context);
-        stack.unshift([]);
-
-        await tag.body(context);
-
-        const params = stack.shift();
 
         if (message && params.length) {
             message = message.replace(/\{(\d+)}/g, (_, $1) => (params[+$1] ?? ""));

@@ -1,8 +1,19 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-import {getMessageData} from "./MessageTag.js";
 
 type Properties = JstlFmt.Properties;
+
+const storeKey = "fmt:bundle";
+
+interface BundleData {
+    stack: Properties[];
+}
+
+const initFn = (): BundleData => ({stack: []});
+
+export const getBundleData = (app: NSP.App, context: any) => {
+    return app.store(context, storeKey, initFn);
+};
 
 /**
  * <fmt:bundle>
@@ -17,18 +28,18 @@ type Properties = JstlFmt.Properties;
  * </fmt:bundle>
  */
 export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
-    return (context) => {
+    return async (context) => {
         const {basename, prefix} = tag.attr(context);
 
         let properties = tag.app.process<Properties>("fmt:bundle", basename);
 
-        const {stack} = getMessageData(tag.app, context);
+        const {stack} = getBundleData(tag.app, context);
 
         if (prefix) properties = filter(properties, prefix);
 
         stack.unshift(properties);
 
-        const body = tag.body(context);
+        const body = await tag.body(context);
 
         stack.shift();
 

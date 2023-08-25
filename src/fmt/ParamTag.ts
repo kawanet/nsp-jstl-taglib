@@ -1,17 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-
-const storeKey = "fmt:param";
-
-interface ParamData {
-    stack: string[][];
-}
-
-const initFn = (): ParamData => ({stack: []});
-
-export const getParamData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
-};
+import {getMessageData} from "./MessageTag.js";
 
 /**
  * <fmt:param>
@@ -24,7 +13,7 @@ export const getParamData = (app: NSP.App, context: any) => {
 export const paramTag: NSP.TagFn<JstlFmt.ParamTagAttr> = (tag) => {
     return (context) => {
         const {value} = tag.attr(context);
-        const {stack} = getParamData(tag.app, context);
+        const {stack} = getMessageData(tag.app, context);
 
         // PARAM_OUTSIDE_MESSAGE
         if (!stack.length) {
