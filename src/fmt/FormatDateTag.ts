@@ -3,7 +3,7 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
 import {getSetTimeZoneStore} from "./TimeZoneTag.js";
-import {getSetLocaleData} from "./SetLocaleTag.js";
+import {getSetLocaleStore} from "./SetLocaleTag.js";
 
 /**
  * <fmt:formatDate>
@@ -35,7 +35,8 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
             dt = dt.utcOffset(minutes);
         }
 
-        const {locale} = getSetLocaleData(tag.app, context);
+        const store = getSetLocaleStore(tag.app, context);
+        const locale = store.current()?.locale;
         if (locale) {
             dt = dt.locale(locale);
         }

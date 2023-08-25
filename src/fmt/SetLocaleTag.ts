@@ -1,17 +1,14 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-
-const storeKey = "fmt:setLocale";
+import {StackStore} from "../lib/StackStore.js";
 
 interface SetLocaleData {
     locale?: string;
     variant?: string;
 }
 
-const initFn = (): SetLocaleData => ({});
-
-export const getSetLocaleData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
+export const getSetLocaleStore = (app: NSP.App, context: any) => {
+    return app.store(context, "fmt:setLocale", () => new StackStore<SetLocaleData>());
 };
 
 /**
@@ -23,9 +20,8 @@ export const getSetLocaleData = (app: NSP.App, context: any) => {
  */
 export const setLocaleTag: NSP.TagFn<JstlFmt.SetLocaleTagAttr> = (tag) => {
     return (context) => {
-        const data = getSetLocaleData(tag.app, context);
+        const store = getSetLocaleStore(tag.app, context);
         const {value, variant} = tag.attr(context);
-        data.locale = value;
-        data.variant = variant;
+        store.open({locale: value, variant});
     };
 };
