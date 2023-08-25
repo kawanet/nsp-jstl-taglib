@@ -15,7 +15,7 @@ const isTrue = (value: any) => (!!value && value !== "false");
 export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
     return (context) => {
         const store = cChooseStore(tag.app, context);
-        const status = store.current();
+        const status = store.get();
 
         // WHEN_OUTSIDE_CHOOSE
         if (status == null) {
@@ -25,7 +25,7 @@ export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
         if (status !== true) {
             const {test} = tag.attr(context);
             if (isTrue(test)) {
-                store.current(true);
+                store.set(true);
                 return tag.body(context);
             }
         }

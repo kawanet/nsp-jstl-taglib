@@ -14,7 +14,7 @@ import {cChooseStore} from "./ChooseTag.js";
 export const otherwiseTag: NSP.TagFn<JstlC.OtherwiseTagAttr> = (tag) => {
     return (context) => {
         const store = cChooseStore(tag.app, context);
-        const status = store.current();
+        const status = store.get();
 
         // WHEN_OUTSIDE_CHOOSE
         if (!status == null) {
@@ -23,7 +23,7 @@ export const otherwiseTag: NSP.TagFn<JstlC.OtherwiseTagAttr> = (tag) => {
 
         // true means done. false means not yet.
         if (status !== true) {
-            store.current(true);
+            store.set(true);
             return tag.body(context);
         }
     }

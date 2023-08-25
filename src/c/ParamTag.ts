@@ -16,8 +16,7 @@ export const cParamStore = (app: NSP.App, context: any) => {
 export const paramTag: NSP.TagFn<JstlC.ParamTagAttr> = (tag) => {
     return (context) => {
         const {name, value} = tag.attr(context);
-        const store = cParamStore(tag.app, context);
-        const params = store.current();
+        const params = cParamStore(tag.app, context).get();
 
         // PARAM_OUTSIDE_PARENT
         if (!params) {

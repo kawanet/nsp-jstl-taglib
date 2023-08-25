@@ -17,8 +17,7 @@ export const fmtParamStore = (app: NSP.App, context: any) => {
 export const paramTag: NSP.TagFn<JstlFmt.ParamTagAttr> = (tag) => {
     return (context) => {
         const {value} = tag.attr(context);
-        const store = fmtParamStore(tag.app, context);
-        const params = store.current();
+        const params = fmtParamStore(tag.app, context).get();
 
         // PARAM_OUTSIDE_MESSAGE
         if (!params) {

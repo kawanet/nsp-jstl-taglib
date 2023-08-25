@@ -9,12 +9,12 @@ export class StackStore<T> {
         return this.stack.shift();
     }
 
-    current(value?: T): T {
-        if (arguments.length) {
-            this.stack[0] = value;
-        }
-
+    get(): T {
         return this.stack[0];
+    }
+
+    set(value: T): void {
+        this.stack[0] = value;
     }
 
     find(test: (data: T) => boolean): T {

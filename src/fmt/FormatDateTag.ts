@@ -25,8 +25,7 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         if (timeZone) {
             tz = TimeZone.getTimeZone(timeZone);
         } else {
-            const store = fmtSetTimeZoneStore(tag.app, context);
-            tz = store.current();
+            tz = fmtSetTimeZoneStore(tag.app, context).get();
         }
 
         let dt = cdate(value);
@@ -36,7 +35,7 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         }
 
         const store = cSetLocaleStore(tag.app, context);
-        const locale = store.current()?.locale;
+        const locale = store.get()?.locale;
         if (locale) {
             dt = dt.locale(locale);
         }
