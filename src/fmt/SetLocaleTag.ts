@@ -1,6 +1,5 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-import {StackStore} from "../lib/StackStore.js";
 
 interface SetLocaleData {
     locale?: string;
@@ -8,7 +7,7 @@ interface SetLocaleData {
 }
 
 export const cSetLocaleStore = (app: NSP.App, context: any) => {
-    return app.store(context, "fmt:setLocale", () => new StackStore<SetLocaleData>());
+    return app.store<SetLocaleData>(context, "fmt:setLocale");
 };
 
 /**

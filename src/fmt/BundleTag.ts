@@ -1,11 +1,10 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
-import {StackStore} from "../lib/StackStore.js";
 
 type Properties = JstlFmt.Properties;
 
 export const fmtBundleStore = (app: NSP.App, context: any) => {
-    return app.store(context, "fmt:bundle", () => new StackStore<Properties>());
+    return app.store<Properties>(context, "fmt:bundle");
 };
 
 /**

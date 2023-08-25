@@ -1,9 +1,8 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {StackStore} from "../lib/StackStore.js";
 
 export const cParamStore = (app: NSP.App, context: any) => {
-    return app.store(context, "c:param", () => new StackStore<URLSearchParams>());
+    return app.store<URLSearchParams>(context, "c:param");
 };
 
 /**

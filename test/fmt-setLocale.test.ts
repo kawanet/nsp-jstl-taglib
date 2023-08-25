@@ -2,7 +2,7 @@ import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
 import {fmtTags} from "../src/index.js";
 
-const TITLE = "fmt-setTimeZone.test.ts";
+const TITLE = "fmt-setLocale.test.ts";
 
 interface Context {
     date?: Date;

@@ -1,10 +1,9 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
-import {StackStore} from "../lib/StackStore.js";
 
 export const fmtSetTimeZoneStore = (app: NSP.App, context: any) => {
-    return app.store(context, "fmt:timeZone", () => new StackStore<JstlFmt.TimeZone>());
+    return app.store<JstlFmt.TimeZone>(context, "fmt:timeZone");
 };
 
 /**

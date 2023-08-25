@@ -6,10 +6,9 @@
 
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {StackStore} from "../lib/StackStore.js";
 
 export const cChooseStore = (app: NSP.App, context: any) => {
-    return app.store(context, "c:choose", () => new StackStore<boolean>());
+    return app.store<boolean>(context, "c:choose");
 };
 
 /**
