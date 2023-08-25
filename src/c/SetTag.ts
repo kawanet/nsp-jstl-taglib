@@ -6,7 +6,11 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
 
 /**
- * <c:set var="${var}" value="${value}"/>
+ * <c:set>
+ * org.apache.taglibs.standard.tag.rt.core.SetTag
+ *
+ * @description
+ * Sets the result of an expression evaluation in a 'scope'
  */
 export const setTag: NSP.TagFn<JstlC.SetTagAttr> = tag => {
     return context => {

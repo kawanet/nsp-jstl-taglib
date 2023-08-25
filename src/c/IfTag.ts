@@ -8,7 +8,13 @@ import type {JstlC} from "../index.js";
 const isTrue = (value: any) => (!!value && value !== "false");
 
 /**
- * <c:if test="${test}">
+ * <c:if>
+ * org.apache.taglibs.standard.tag.rt.core.IfTag
+ *
+ * @description
+ * Simple conditional tag, which evalutes its body if the
+ * supplied condition is true and optionally exposes a Boolean
+ * scripting variable representing the evaluation of this condition
  */
 export const ifTag: NSP.TagFn<JstlC.IfTagAttr> = tag => {
     return context => {

@@ -14,6 +14,13 @@ const isEmpty = (v: any): boolean => (v == null || v === "");
 
 const trim = (v: string): string => (("string" === typeof v) ? v.trim() : v);
 
+/**
+ * <c:out>
+ * org.apache.taglibs.standard.tag.rt.core.OutTag
+ *
+ * @description
+ * Like <%= ... >, but for expressions.
+ */
 export const outTag: NSP.TagFn<JstlC.OutTagAttr> = tag => {
     return context => {
         const attr = tag.attr(context);
