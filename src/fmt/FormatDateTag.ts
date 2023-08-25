@@ -18,7 +18,10 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
     return (context) => {
 
         const {value, var: varName, pattern, type, dateStyle, timeStyle, timeZone} = tag.attr(context);
-        if (!value) throw new Error(`<fmt:formatDate> requires a "value" attribute`);
+        if (!value) {
+            if (varName) context[varName] = null;
+            return tag.body(context);
+        }
 
         let tz: TimeZone;
         if (isTimeZone(timeZone)) {
