@@ -18,10 +18,10 @@ describe(TITLE, () => {
 
         const fn = nsp.parse(src).toFn();
 
-        assert.equal(fn({foo: true}), "[FOO]");
-        assert.equal(fn({foo: false}), "[BAR]");
-        assert.equal(fn({foo: "true"}), "[FOO]");
-        assert.equal(fn({foo: "false"}), "[BAR]");
+        assert.equal(await fn({foo: true}), "[FOO]");
+        assert.equal(await fn({foo: false}), "[BAR]");
+        assert.equal(await fn({foo: "true"}), "[FOO]");
+        assert.equal(await fn({foo: "false"}), "[BAR]");
     });
 
     it("<c:when></c:when><c:when></c:when>", async () => {
@@ -33,11 +33,11 @@ describe(TITLE, () => {
 
         const fn = nsp.parse(src5).toFn();
 
-        assert.equal(fn({foo: true, bar: true, buz: true}), "[FOO]", "#1");
-        assert.equal(fn({foo: true, bar: false, buz: false}), "[FOO]", "#2");
-        assert.equal(fn({foo: false, bar: true, buz: false}), "[BAR]");
-        assert.equal(fn({foo: false, bar: false, buz: true}), "[BUZ]");
-        assert.equal(fn({foo: false, bar: false, buz: false}), "[QUX]");
+        assert.equal(await fn({foo: true, bar: true, buz: true}), "[FOO]", "#1");
+        assert.equal(await fn({foo: true, bar: false, buz: false}), "[FOO]", "#2");
+        assert.equal(await fn({foo: false, bar: true, buz: false}), "[BAR]");
+        assert.equal(await fn({foo: false, bar: false, buz: true}), "[BUZ]");
+        assert.equal(await fn({foo: false, bar: false, buz: false}), "[QUX]");
     });
 
     it("<c:choose><c:choose></c:choose></c:choose>", async () => {
@@ -47,10 +47,10 @@ describe(TITLE, () => {
 
         const fn = nsp.parse(src3).toFn();
 
-        assert.equal(fn({foo: true, bar: true}), "[[BAR]]");
-        assert.equal(fn({foo: true, bar: false}), "[[bar]]");
-        assert.equal(fn({foo: false, buz: true}), "[[BUZ]]");
-        assert.equal(fn({foo: false, buz: false}), "[[buz]]");
+        assert.equal(await fn({foo: true, bar: true}), "[[BAR]]");
+        assert.equal(await fn({foo: true, bar: false}), "[[bar]]");
+        assert.equal(await fn({foo: false, buz: true}), "[[BUZ]]");
+        assert.equal(await fn({foo: false, buz: false}), "[[buz]]");
     });
 
     it("<c:choose></c:choose><c:choose></c:choose>", async () => {
@@ -61,10 +61,10 @@ describe(TITLE, () => {
 
         const fn = nsp.parse(src4).toFn();
 
-        assert.equal(fn({foo: true, bar: true, buz: true}), "[FOO][BAR][BUZ]");
-        assert.equal(fn({foo: true, bar: false, buz: false}), "[FOO][bar][buz]");
-        assert.equal(fn({foo: false, bar: true, buz: false}), "[foo][BAR][buz]");
-        assert.equal(fn({foo: false, bar: false, buz: true}), "[foo][bar][BUZ]");
-        assert.equal(fn({foo: false, bar: false, buz: false}), "[foo][bar][buz]");
+        assert.equal(await fn({foo: true, bar: true, buz: true}), "[FOO][BAR][BUZ]");
+        assert.equal(await fn({foo: true, bar: false, buz: false}), "[FOO][bar][buz]");
+        assert.equal(await fn({foo: false, bar: true, buz: false}), "[foo][BAR][buz]");
+        assert.equal(await fn({foo: false, bar: false, buz: true}), "[foo][bar][BUZ]");
+        assert.equal(await fn({foo: false, bar: false, buz: false}), "[foo][bar][buz]");
     });
 });

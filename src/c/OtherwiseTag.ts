@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {getChooseData} from "./ChooseTag.js";
+import {getChooseStore} from "./ChooseTag.js";
 
 /**
  * <c:otherwise>
@@ -13,15 +13,17 @@ import {getChooseData} from "./ChooseTag.js";
  */
 export const otherwiseTag: NSP.TagFn<JstlC.OtherwiseTagAttr> = (tag) => {
     return (context) => {
-        const {stack} = getChooseData(tag.app, context);
+        const store = getChooseStore(tag.app, context);
+        const status = store.current();
 
         // WHEN_OUTSIDE_CHOOSE
-        if (!stack.length) {
+        if (!status == null) {
             throw new Error(`<c:otherwise> must be inside <c:choose>`);
         }
 
-        if (stack[0] !== true) {
-            stack[0] = true;
+        // true means done. false means not yet.
+        if (status !== true) {
+            store.current(true);
             return tag.body(context);
         }
     }

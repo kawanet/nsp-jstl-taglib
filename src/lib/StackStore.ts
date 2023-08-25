@@ -9,8 +9,12 @@ export class StackStore<T> {
         return this.stack.shift();
     }
 
-    current(): T {
-        return this.stack.at(0);
+    current(value?: T): T {
+        if (arguments.length) {
+            this.stack[0] = value;
+        }
+
+        return this.stack[0];
     }
 
     find(test: (data: T) => boolean): T {

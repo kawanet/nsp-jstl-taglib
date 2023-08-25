@@ -6,18 +6,10 @@
 
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
+import {StackStore} from "../lib/StackStore.js";
 
-interface ChooseData {
-    // true means done. false means not yet.
-    stack: boolean[];
-}
-
-const storeKey = "c:choose";
-
-const initFn = (): ChooseData => ({stack: []});
-
-export const getChooseData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
+export const getChooseStore = (app: NSP.App, context: any) => {
+    return app.store(context, "c:choose", () => new StackStore<boolean>());
 };
 
 /**
@@ -30,11 +22,14 @@ export const getChooseData = (app: NSP.App, context: any) => {
  * <when> and <otherwise>
  */
 export const chooseTag: NSP.TagFn<JstlC.ChooseTagAttr> = (tag) => {
-    return (context) => {
-        const {stack} = getChooseData(tag.app, context);
-        stack.unshift(false);
-        const result = tag.body(context);
-        stack.shift();
+    return async (context) => {
+        const store = getChooseStore(tag.app, context);
+
+        // true means done. false means not yet.
+        store.open(false);
+        const result = await tag.body(context);
+        store.close();
+
         return result;
     };
 };

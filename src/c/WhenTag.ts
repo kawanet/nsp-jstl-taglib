@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {getChooseData} from "./ChooseTag.js";
+import {getChooseStore} from "./ChooseTag.js";
 
 const isTrue = (value: any) => (!!value && value !== "false");
 
@@ -14,17 +14,18 @@ const isTrue = (value: any) => (!!value && value !== "false");
  */
 export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
     return (context) => {
-        const {stack} = getChooseData(tag.app, context);
+        const store = getChooseStore(tag.app, context);
+        const status = store.current();
 
         // WHEN_OUTSIDE_CHOOSE
-        if (!stack.length) {
+        if (status == null) {
             throw new Error(`<c:when> must be inside <c:choose>`);
         }
 
-        if (stack[0] !== true) {
+        if (status !== true) {
             const {test} = tag.attr(context);
             if (isTrue(test)) {
-                stack[0] = true;
+                store.current(true);
                 return tag.body(context);
             }
         }
