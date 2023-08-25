@@ -1,17 +1,10 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
+import {StackStore} from "../lib/StackStore.js";
 
-const storeKey = "fmt:timeZone";
-
-interface ParamData {
-    stack: JstlFmt.TimeZone[];
-}
-
-const initFn = (): ParamData => ({stack: []});
-
-export const getSetTimeZoneData = (app: NSP.App, context: any) => {
-    return app.store(context, storeKey, initFn);
+export const getSetTimeZoneStore = (app: NSP.App, context: any) => {
+    return app.store(context, "fmt:timeZone", () => new StackStore<JstlFmt.TimeZone>());
 };
 
 /**
@@ -24,14 +17,14 @@ export const getSetTimeZoneData = (app: NSP.App, context: any) => {
  */
 export const timeZoneTag: NSP.TagFn<JstlFmt.TimeZoneTagAttr> = (tag) => {
     return async (context) => {
-        const {stack} = getSetTimeZoneData(tag.app, context);
+        const store = getSetTimeZoneStore(tag.app, context);
         const {value} = tag.attr(context);
 
         const tz = TimeZone.getTimeZone(value || "GMT");
 
-        if (tz) stack.unshift(tz);
+        if (tz) store.open(tz);
         const result = await tag.body(context);
-        if (tz) stack.shift();
+        if (tz) store.close();
 
         return result;
     };

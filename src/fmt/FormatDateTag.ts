@@ -2,7 +2,7 @@ import {cdate} from "cdate";
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
-import {getSetTimeZoneData} from "./TimeZoneTag.js";
+import {getSetTimeZoneStore} from "./TimeZoneTag.js";
 import {getSetLocaleData} from "./SetLocaleTag.js";
 
 /**
@@ -25,8 +25,8 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         if (timeZone) {
             tz = TimeZone.getTimeZone(timeZone);
         } else {
-            const {stack} = getSetTimeZoneData(tag.app, context);
-            tz = stack[0];
+            const store = getSetTimeZoneStore(tag.app, context);
+            tz = store.current();
         }
 
         let dt = cdate(value);
