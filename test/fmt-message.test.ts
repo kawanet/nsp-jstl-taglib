@@ -32,7 +32,7 @@ describe(TITLE, () => {
         bar: propBar,
     };
 
-    nsp.hook("bundle", (name: string) => props[name as keyof typeof props]);
+    nsp.hook("fmt:bundle", (name: string) => props[name as keyof typeof props]);
 
     /**
      * @example

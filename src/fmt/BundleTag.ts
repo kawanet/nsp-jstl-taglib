@@ -20,7 +20,7 @@ export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
     return (context) => {
         const {basename, prefix} = tag.attr(context);
 
-        let properties = tag.app.process<Properties>("bundle", basename);
+        let properties = tag.app.process<Properties>("fmt:bundle", basename);
 
         const {stack} = getMessageData(tag.app, context);
 

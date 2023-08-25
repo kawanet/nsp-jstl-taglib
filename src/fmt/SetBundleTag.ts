@@ -20,7 +20,7 @@ export const setBundleTag: NSP.TagFn<JstlFmt.SetBundleTagAttr> = (tag) => {
     return (context) => {
         const {basename, var: varName} = tag.attr(context);
 
-        context[varName] = tag.app.process<Properties>("bundle", basename);
+        context[varName] = tag.app.process<Properties>("fmt:bundle", basename);
 
         return tag.body(context);
     };
