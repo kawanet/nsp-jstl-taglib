@@ -88,4 +88,13 @@ describe(TITLE, () => {
         assert.equal(await render({key: "only.bar"}), `[BAR]`);
         assert.equal(await render({key: "only.foo"}), `[FOO]`);
     });
+
+    /**
+     * when undefined key given
+     */
+    it('<fmt:message key="undefined"/>', async () => {
+        const src: string = '[<fmt:message key="undefined"/>]';
+        const render = nsp.parse(src).toFn<Context>();
+        assert.equal(await render({}), `[???undefined???]`);
+    });
 });

@@ -16,6 +16,8 @@ export const getMessageData = (app: NSP.App, context: any) => {
     return app.store(context, storeKey, initFn);
 };
 
+const UNDEFINED_KEY = "???";
+
 /**
  * <fmt:message>
  * org.apache.taglibs.standard.tag.rt.fmt.MessageTag
@@ -26,7 +28,7 @@ export const getMessageData = (app: NSP.App, context: any) => {
 export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
     return async (context) => {
         const {key, bundle, var: varName} = tag.attr(context);
-        let message: string;
+        let message: string = UNDEFINED_KEY + key + UNDEFINED_KEY;
 
         if (bundle) {
             /**
@@ -34,7 +36,9 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * <fmt:setBundle basename="bundled" var="bundled"/>
              * <fmt:message key="key" bundle="${bundled}"/>
              */
-            message = bundle[key];
+            if (key in bundle) {
+                message = bundle[key];
+            }
         } else if (varName) {
             /**
              * @example
@@ -42,8 +46,9 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * <fmt:message key="key" var="bundled"/>
              */
             const properties = context[varName];
-            if (!properties) throw new Error(`Properties not set at "${varName}"`);
-            message = properties[key];
+            if (properties && key in properties) {
+                message = properties[key];
+            }
         } else {
             /**
              * @example
@@ -52,12 +57,12 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * </fmt:bundle>
              */
             const {stack} = getMessageData(tag.app, context);
-            if (!stack.length) throw new Error("Properties not set at <fmt:bundle> tag.");
-
-            for (const properties of stack) {
-                if (properties[key] != null) {
-                    message = properties[key];
-                    break;
+            if (stack) {
+                for (const properties of stack) {
+                    if (key in properties) {
+                        message = properties[key];
+                        break;
+                    }
                 }
             }
         }
