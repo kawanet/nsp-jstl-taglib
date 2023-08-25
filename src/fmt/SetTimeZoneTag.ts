@@ -12,8 +12,14 @@ import {TimeZone} from "../lib/TimeZone.js";
 export const setTimeZoneTag: NSP.TagFn<JstlFmt.SetTimeZoneTagAttr> = (tag) => {
     return (context) => {
         const {value, var: varName} = tag.attr(context);
-        if (!value) throw new Error(`<fmt:setTimeZone> requires a "value" attribute`);
 
-        context[varName] = TimeZone.getTimeZone(value);
+        let tz: TimeZone;
+        if (value) {
+            tz = TimeZone.getTimeZone(value);
+        } else {
+            tz = TimeZone.getTimeZone("GMT");
+        }
+
+        context[varName] = tz;
     };
 };

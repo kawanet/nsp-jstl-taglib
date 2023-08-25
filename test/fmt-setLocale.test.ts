@@ -21,7 +21,7 @@ describe(TITLE, () => {
         date: new Date("2023-04-05T06:07:08Z"),
     };
 
-    const src: string = '<fmt:setLocale value="${locale}"/>[<fmt:formatDate value="${date}" type="both" timezone="GMT+00:00"/>]';
+    const src: string = '<fmt:setLocale value="${locale}"/>[<fmt:formatDate value="${date}" type="both" timezone="GMT"/>]';
     const render = nsp.parse(src).toFn<Context>();
 
     it("en", async () => {

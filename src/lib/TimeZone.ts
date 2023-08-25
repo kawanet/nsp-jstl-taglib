@@ -4,7 +4,7 @@ export abstract class TimeZone {
     protected displayName: string;
 
     static getTimeZone(id: string): TimeZone {
-        if (/^(?:GMT)?([+-])(\d+)(?::(\d+))?/.test(id)) {
+        if (/^GMT|^(?:GMT)?([+-])(\d+)(?::(\d+))?/.test(id)) {
             return new TimeZoneByOffset(id);
         } else {
             return new TimeZoneByName(id);

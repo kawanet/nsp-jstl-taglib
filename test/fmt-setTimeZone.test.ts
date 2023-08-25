@@ -23,7 +23,7 @@ describe(TITLE, () => {
         utc: new Date("2023-04-05T06:07:08Z"),
     };
 
-    it('<fmt:setTimeZone>', async () => {
+    it('<fmt:setTimeZone value="xxx"/>', async () => {
         const src: string = '<fmt:setTimeZone value="${tz}" var="tzObj"/>[<fmt:formatDate value="${utc}" pattern="yyyy-MM-dd HH:mm:ss" timeZone="${tzObj}"/>]';
         const render = nsp.parse(src).toFn<Context>();
 
@@ -45,5 +45,13 @@ describe(TITLE, () => {
         ctx.tz = tz = "GMT-12:00";
         expected = "[2023-04-04 18:07:08]";
         assert.equal(await render(ctx), expected, tz);
+    });
+
+    it('<fmt:setTimeZone/> without value', async () => {
+        const src: string = '<fmt:setTimeZone var="tzObj"/>[<fmt:formatDate value="${utc}" pattern="yyyy-MM-dd HH:mm:ss" timeZone="${tzObj}"/>]';
+        const render = nsp.parse(src).toFn<Context>();
+
+        const expected = "[2023-04-05 06:07:08]";
+        assert.equal(await render(ctx), expected);
     });
 });
