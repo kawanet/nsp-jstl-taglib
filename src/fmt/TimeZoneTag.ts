@@ -25,11 +25,9 @@ export const getSetTimeZoneData = (app: NSP.App, context: any) => {
 export const timeZoneTag: NSP.TagFn<JstlFmt.TimeZoneTagAttr> = (tag) => {
     return async (context) => {
         const {stack} = getSetTimeZoneData(tag.app, context);
-
         const {value} = tag.attr(context);
-        if (!value) throw new Error(`<fmt:timeZoneTag> requires a "value" attribute`);
 
-        const tz = TimeZone.getTimeZone(value);
+        const tz = TimeZone.getTimeZone(value || "GMT");
 
         if (tz) stack.unshift(tz);
         const result = await tag.body(context);
