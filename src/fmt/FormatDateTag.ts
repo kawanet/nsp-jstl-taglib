@@ -3,6 +3,7 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
 import {getSetTimeZoneData} from "./TimeZoneTag.js";
+import {getSetLocaleData} from "./SetLocaleTag.js";
 
 const isTimeZone = (tz: any): tz is TimeZone => ("function" === typeof tz?.getDisplayName);
 
@@ -29,7 +30,13 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
             tz = stack[0];
         }
 
-        const dt = tz ? tz.cdate(value) : cdate(value);
+        let dt = tz ? tz.cdate(value) : cdate(value);
+
+        const {locale} = getSetLocaleData(tag.app, context);
+        if (locale) {
+            dt = dt.locale(locale);
+        }
+
         let result: string;
 
         if (pattern) {
