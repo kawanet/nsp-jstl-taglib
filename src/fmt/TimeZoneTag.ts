@@ -3,7 +3,7 @@ import type {JstlFmt} from "../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
 import {StackStore} from "../lib/StackStore.js";
 
-export const getSetTimeZoneStore = (app: NSP.App, context: any) => {
+export const fmtSetTimeZoneStore = (app: NSP.App, context: any) => {
     return app.store(context, "fmt:timeZone", () => new StackStore<JstlFmt.TimeZone>());
 };
 
@@ -17,7 +17,7 @@ export const getSetTimeZoneStore = (app: NSP.App, context: any) => {
  */
 export const timeZoneTag: NSP.TagFn<JstlFmt.TimeZoneTagAttr> = (tag) => {
     return async (context) => {
-        const store = getSetTimeZoneStore(tag.app, context);
+        const store = fmtSetTimeZoneStore(tag.app, context);
         const {value} = tag.attr(context);
 
         const tz = TimeZone.getTimeZone(value || "GMT");

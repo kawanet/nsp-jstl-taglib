@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {getChooseStore} from "./ChooseTag.js";
+import {cChooseStore} from "./ChooseTag.js";
 
 /**
  * <c:otherwise>
@@ -13,7 +13,7 @@ import {getChooseStore} from "./ChooseTag.js";
  */
 export const otherwiseTag: NSP.TagFn<JstlC.OtherwiseTagAttr> = (tag) => {
     return (context) => {
-        const store = getChooseStore(tag.app, context);
+        const store = cChooseStore(tag.app, context);
         const status = store.current();
 
         // WHEN_OUTSIDE_CHOOSE

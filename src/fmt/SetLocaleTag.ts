@@ -7,7 +7,7 @@ interface SetLocaleData {
     variant?: string;
 }
 
-export const getSetLocaleStore = (app: NSP.App, context: any) => {
+export const cSetLocaleStore = (app: NSP.App, context: any) => {
     return app.store(context, "fmt:setLocale", () => new StackStore<SetLocaleData>());
 };
 
@@ -20,7 +20,7 @@ export const getSetLocaleStore = (app: NSP.App, context: any) => {
  */
 export const setLocaleTag: NSP.TagFn<JstlFmt.SetLocaleTagAttr> = (tag) => {
     return (context) => {
-        const store = getSetLocaleStore(tag.app, context);
+        const store = cSetLocaleStore(tag.app, context);
         const {value, variant} = tag.attr(context);
         store.open({locale: value, variant});
     };

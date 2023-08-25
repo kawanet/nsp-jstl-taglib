@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
-import {getChooseStore} from "./ChooseTag.js";
+import {cChooseStore} from "./ChooseTag.js";
 
 const isTrue = (value: any) => (!!value && value !== "false");
 
@@ -14,7 +14,7 @@ const isTrue = (value: any) => (!!value && value !== "false");
  */
 export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
     return (context) => {
-        const store = getChooseStore(tag.app, context);
+        const store = cChooseStore(tag.app, context);
         const status = store.current();
 
         // WHEN_OUTSIDE_CHOOSE

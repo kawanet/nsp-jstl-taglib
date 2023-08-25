@@ -8,7 +8,7 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
 import {StackStore} from "../lib/StackStore.js";
 
-export const getChooseStore = (app: NSP.App, context: any) => {
+export const cChooseStore = (app: NSP.App, context: any) => {
     return app.store(context, "c:choose", () => new StackStore<boolean>());
 };
 
@@ -23,7 +23,7 @@ export const getChooseStore = (app: NSP.App, context: any) => {
  */
 export const chooseTag: NSP.TagFn<JstlC.ChooseTagAttr> = (tag) => {
     return async (context) => {
-        const store = getChooseStore(tag.app, context);
+        const store = cChooseStore(tag.app, context);
 
         // true means done. false means not yet.
         store.open(false);

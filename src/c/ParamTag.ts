@@ -2,7 +2,7 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../index.js";
 import {StackStore} from "../lib/StackStore.js";
 
-export const getParamStore = (app: NSP.App, context: any) => {
+export const cParamStore = (app: NSP.App, context: any) => {
     return app.store(context, "c:param", () => new StackStore<URLSearchParams>());
 };
 
@@ -16,7 +16,7 @@ export const getParamStore = (app: NSP.App, context: any) => {
 export const paramTag: NSP.TagFn<JstlC.ParamTagAttr> = (tag) => {
     return (context) => {
         const {name, value} = tag.attr(context);
-        const store = getParamStore(tag.app, context);
+        const store = cParamStore(tag.app, context);
         const params = store.current();
 
         // PARAM_OUTSIDE_PARENT

@@ -4,7 +4,7 @@ import {StackStore} from "../lib/StackStore.js";
 
 type Properties = JstlFmt.Properties;
 
-export const getBundleStore = (app: NSP.App, context: any) => {
+export const fmtBundleStore = (app: NSP.App, context: any) => {
     return app.store(context, "fmt:bundle", () => new StackStore<Properties>());
 };
 
@@ -26,7 +26,7 @@ export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
 
         let properties = tag.app.process<Properties>("fmt:bundle", basename);
 
-        const store = getBundleStore(tag.app, context);
+        const store = fmtBundleStore(tag.app, context);
 
         if (prefix) properties = filter(properties, prefix);
 
