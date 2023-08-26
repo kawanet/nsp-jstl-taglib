@@ -1,5 +1,5 @@
 import {cdate} from "cdate";
-import type {JstlFmt} from "../index.js";
+import type {JstlFmt} from "../../index.js";
 
 const isTimeZone = (tz: any): tz is JstlFmt.TimeZone => ("function" === typeof tz?.getDisplayName);
 

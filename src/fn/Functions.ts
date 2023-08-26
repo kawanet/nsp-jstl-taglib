@@ -3,7 +3,7 @@
  */
 
 import {$$} from "telesy";
-import type {JstlFn} from "../index.js";
+import type {JstlFn} from "../../index.js";
 
 /**
  * @description

@@ -16,7 +16,7 @@
  */
 
 import {strict as assert} from "assert";
-import {fnFunctions} from "../src/index.js";
+import {fnFunctions} from "../index.js";
 
 const TITLE = "fn-functions.test.ts";
 

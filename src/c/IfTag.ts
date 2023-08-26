@@ -3,7 +3,7 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import type {JstlC} from "../index.js";
+import type {JstlC} from "../../index.js";
 
 const isTrue = (value: any) => (!!value && value !== "false");
 

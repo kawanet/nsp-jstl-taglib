@@ -1,6 +1,6 @@
 import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
-import {cTags, fmtTags, fnFunctions} from "../src/index.js";
+import {cTags, fmtTags, fnFunctions} from "../index.js";
 
 const TITLE = "synopsis.test.ts";
 

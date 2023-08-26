@@ -1,5 +1,5 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlC} from "../index.js";
+import type {JstlC} from "../../index.js";
 import {cChooseStore} from "./ChooseTag.js";
 
 /**

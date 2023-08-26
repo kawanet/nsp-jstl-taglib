@@ -1,6 +1,6 @@
 #!/usr/bin/env bash -c make
 
-all: test-title types/index.d.ts esm/src/index.js cjs/src/index.js LICENSE
+all: test-title types/index.d.ts esm/index.js cjs/index.js esm/test/synopsis.test.js cjs/test/synopsis.test.js LICENSE
 
 test: test-esm test-cjs
 
@@ -16,10 +16,10 @@ cjs/%.js: ./%.ts
 esm/%.js: %.ts
 	./node_modules/.bin/tsc -p tsconfig.json
 
-types/index.d.ts: src/index.ts
-	./node_modules/.bin/tsc --outDir tmp/ --declaration --emitDeclarationOnly src/index.ts
-	perl -pe 's#(type \{) +(.*?) +(})#$$1$$2$$3#; s#( from ".)./types(/[a-z]+.)#$$1$$2#' < tmp/index.d.ts > types/index.d.ts
-	/bin/rm -f tmp/*.d.ts
+types/index.d.ts: index.ts
+	./node_modules/.bin/tsc --outDir tmp/ --declaration --emitDeclarationOnly $<
+	perl -pe 's#(type \{) +(.*?) +(})#$$1$$2$$3#; s#( from ".)/types(/[a-z]+.)#$$1$$2#' < tmp/index.d.ts > $@
+	/bin/rm -f tmp/*.d.ts tmp/*/*.d.ts
 
 test-title:
 	perl -i -pe '@f = split("/",$$ARGV); s#^const TITLE =.*#const TITLE = "$$f[-1]";#' ./test/*.ts

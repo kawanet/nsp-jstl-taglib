@@ -1,6 +1,6 @@
 import {cdate} from "cdate";
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../index.js";
+import type {JstlFmt} from "../../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
 import {fmtSetTimeZoneStore} from "./TimeZoneTag.js";
 import {cSetLocaleStore} from "./SetLocaleTag.js";

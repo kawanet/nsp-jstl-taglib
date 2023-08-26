@@ -5,7 +5,7 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import type {JstlC} from "../index.js";
+import type {JstlC} from "../../index.js";
 
 export const cChooseStore = (app: NSP.App, context: any) => {
     return app.store<boolean>(context, "c:choose");

@@ -1,5 +1,5 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../index.js";
+import type {JstlFmt} from "../../index.js";
 
 export const fmtParamStore = (app: NSP.App, context: any) => {
     return app.store<string[]>(context, "fmt:param");

@@ -1,5 +1,5 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlC} from "../index.js";
+import type {JstlC} from "../../index.js";
 
 const isPromise = <T>(v: any): v is Promise<T> => v && (typeof v.catch === "function");
 

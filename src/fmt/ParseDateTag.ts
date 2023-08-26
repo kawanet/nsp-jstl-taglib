@@ -1,5 +1,5 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../index.js";
+import type {JstlFmt} from "../../index.js";
 
 /**
  * <fmt:parseDate>

@@ -1,6 +1,6 @@
 import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
-import {fmtTags, JstlFmt} from "../src/index.js";
+import {fmtTags, JstlFmt} from "../index.js";
 
 const TITLE = "fmt-message.test.ts";
 

@@ -21,14 +21,17 @@
     ".": {
       "import": {
         "types": "./types/index.d.ts",
-        "default": "./esm/src/index.js"
+        "default": "./esm/index.js"
       },
-      "require": "./cjs/src/index.js"
+      "require": "./cjs/index.js"
     }
   },
   "files": [
+    "cjs/index.js",
     "cjs/package.json",
     "cjs/src/**/*.js",
+    "esm/index.js",
+    "esm/package.json",
     "esm/src/**/*.js",
     "package.json",
     "types/*.d.ts"
@@ -41,7 +44,7 @@
     "taglib"
   ],
   "license": "Apache-2.0",
-  "main": "./esm/src/index.js",
+  "main": "./esm/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kawanet/nsp-jstl-taglib.git"

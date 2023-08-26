@@ -4,6 +4,7 @@
     "tmp/"
   ],
   "include": [
+    "index.ts",
     "src/",
     "test/",
     "types/"

@@ -1,6 +1,6 @@
 import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
-import {cTags} from "../src/index.js";
+import {cTags} from "../index.js";
 
 const TITLE = "c-if.test.ts";
 

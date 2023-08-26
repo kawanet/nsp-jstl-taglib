@@ -4,7 +4,7 @@
 
 import type {NSP} from "nsp-server-pages";
 import {$$} from "telesy";
-import type {JstlC} from "../index.js";
+import type {JstlC} from "../../index.js";
 
 const isFalse = (value: any) => (value === false || value === "false");
 

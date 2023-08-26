@@ -1,7 +1,7 @@
 import {strict as assert} from "assert";
 import {promises as fs} from "fs";
 import {createNSP} from "nsp-server-pages";
-import {cTags} from "../src/index.js";
+import {cTags} from "../index.js";
 
 const TITLE = "c-out.test.ts";
 
