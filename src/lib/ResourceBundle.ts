@@ -10,7 +10,7 @@ export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
     static isBundle = (v: any): v is JstlFmt.ResourceBundle => (v && "function" === typeof v.getString);
 
     static async getBundle(basename: string, locale: Locale, app: NSP.App): Promise<JstlFmt.ResourceBundle> {
-        const resource = await app.process<Promise<JstlFmt.ResourceBundle | Properties>>("fmt:bundle", basename, locale);
+        const resource = await app.process<Promise<JstlFmt.ResourceBundle | Properties>>("ResourceBundle.getBundle", basename, locale);
 
         if (ResourceBundle.isBundle(resource)) {
             return resource;
