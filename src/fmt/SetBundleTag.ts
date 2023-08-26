@@ -24,7 +24,7 @@ export const setBundleTag: NSP.TagFn<JstlFmt.SetBundleTagAttr> = (tag) => {
 
         const locale = fmtSetLocaleStore(app, context).get();
 
-        context[varName] = await ResourceBundle.getBundle(basename, locale?.locale, app);
+        context[varName] = await ResourceBundle.getBundle(basename, locale, app);
 
         return tag.body(context);
     };

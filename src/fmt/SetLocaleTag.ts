@@ -1,13 +1,9 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
-
-interface SetLocaleData {
-    locale?: string;
-    variant?: string;
-}
+import {Locale} from "../lib/Locale.js";
 
 export const fmtSetLocaleStore = (app: NSP.App, context: any) => {
-    return app.store<SetLocaleData>(context, "fmt:setLocale");
+    return app.store<Locale>(context, "fmt:setLocale");
 };
 
 /**
@@ -21,6 +17,6 @@ export const setLocaleTag: NSP.TagFn<JstlFmt.SetLocaleTagAttr> = (tag) => {
     return (context) => {
         const store = fmtSetLocaleStore(tag.app, context);
         const {value, variant} = tag.attr(context);
-        store.set({locale: value, variant});
+        store.set(new Locale(value, null, variant));
     };
 };

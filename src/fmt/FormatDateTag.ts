@@ -35,7 +35,7 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         }
 
         const store = fmtSetLocaleStore(tag.app, context);
-        const locale = store.get()?.locale;
+        const locale = store.get()?.getLanguage();
         if (locale) {
             dt = dt.locale(locale);
         }
