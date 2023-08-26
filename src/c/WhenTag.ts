@@ -2,7 +2,7 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../../index.js";
 import {cChooseStore} from "./ChooseTag.js";
 
-const isTrue = (value: any) => (!!value && value !== "false");
+const isTrue = (v: any): v is true => (!!v && v !== "false");
 
 /**
  * <c:when>

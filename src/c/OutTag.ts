@@ -6,7 +6,7 @@ import type {NSP} from "nsp-server-pages";
 import {$$} from "telesy";
 import type {JstlC} from "../../index.js";
 
-const isFalse = (value: any) => (value === false || value === "false");
+const isFalse = (v: any): v is false => (v === false || v === "false");
 
 const isPromise = (v: any): v is Promise<any> => v && (typeof v.then === "function");
 
