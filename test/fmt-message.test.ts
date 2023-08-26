@@ -34,7 +34,7 @@ describe(TITLE, () => {
         bar: propBar,
     };
 
-    nsp.hook("ResourceBundle.getBundle", async (name: string) => props[name as keyof typeof props]);
+    nsp.hook("ResourceBundle.getBundle", async (basename: string) => [props[basename as keyof typeof props]]);
 
     /**
      * @example
