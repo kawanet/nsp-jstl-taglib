@@ -1,8 +1,10 @@
 import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
-import {fmtTags, JstlFmt} from "../index.js";
+import {fmtTags} from "../index.js";
 
 const TITLE = "fmt-message.test.ts";
+
+type Properties = { [key: string]: string };
 
 interface Context {
     basename?: string;
@@ -17,12 +19,12 @@ describe(TITLE, () => {
 
     nsp.addTagLib({ns: "fmt", tag: fmtTags});
 
-    const propFoo: JstlFmt.Properties = {
+    const propFoo: Properties = {
         "only.foo": "FOO",
         "item.name": "Foo",
     };
 
-    const propBar: JstlFmt.Properties = {
+    const propBar: Properties = {
         "only.bar": "BAR",
         "item.name": "Bar",
     };

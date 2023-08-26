@@ -1,17 +1,15 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
 import {fmtSetLocaleStore} from "./SetLocaleTag.js";
+import {ResourceBundle} from "../lib/ResourceBundle.js";
 
-type Properties = JstlFmt.Properties;
+interface Bundle {
+    resource: JstlFmt.ResourceBundle;
+    prefix?: string;
+}
 
 export const fmtBundleStore = (app: NSP.App, context: any) => {
-    return app.store<Properties>(context, "fmt:bundle");
-};
-
-export const getBundle = async (app: NSP.App, basename: string, context: any): Promise<Properties> => {
-    const locale = fmtSetLocaleStore(app, context).get();
-
-    return app.process<Properties | Promise<Properties>>("fmt:bundle", basename, locale?.locale);
+    return app.store<Bundle>(context, "fmt:bundle");
 };
 
 /**
@@ -28,15 +26,17 @@ export const getBundle = async (app: NSP.App, basename: string, context: any): P
  */
 export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
     return async (context) => {
+        const {app} = tag;
+
         const {basename, prefix} = tag.attr(context);
 
-        let properties = await getBundle(tag.app, basename, context);
+        const locale = fmtSetLocaleStore(app, context).get();
 
-        const store = fmtBundleStore(tag.app, context);
+        const resource = await ResourceBundle.getBundle(basename, locale?.locale, app);
 
-        if (prefix) properties = filter(properties, prefix);
+        const store = fmtBundleStore(app, context);
 
-        store.open(properties);
+        store.open({resource, prefix});
 
         const body = await tag.body(context);
 
@@ -44,19 +44,4 @@ export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
 
         return body;
     };
-};
-
-const filter = (properties: Properties, prefix: string) => {
-    const result: Properties = {};
-
-    const prefixLength = prefix.length;
-
-    Object.keys(properties).forEach(key => {
-        if (key.startsWith(prefix)) {
-            const shortKey = key.substring(prefixLength);
-            result[shortKey] = properties[key];
-        }
-    });
-
-    return result;
 };

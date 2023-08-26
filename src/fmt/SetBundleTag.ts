@@ -1,6 +1,7 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
-import {getBundle} from "./BundleTag.js";
+import {ResourceBundle} from "../lib/ResourceBundle.js";
+import {fmtSetLocaleStore} from "./SetLocaleTag.js";
 
 /**
  * <fmt:setBundle>
@@ -17,9 +18,13 @@ import {getBundle} from "./BundleTag.js";
  */
 export const setBundleTag: NSP.TagFn<JstlFmt.SetBundleTagAttr> = (tag) => {
     return async (context) => {
+        const {app} = tag;
+
         const {basename, var: varName} = tag.attr(context);
 
-        context[varName] = await getBundle(tag.app, basename, context);
+        const locale = fmtSetLocaleStore(app, context).get();
+
+        context[varName] = await ResourceBundle.getBundle(basename, locale?.locale, app);
 
         return tag.body(context);
     };

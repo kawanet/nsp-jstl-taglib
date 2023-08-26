@@ -22,7 +22,9 @@ export declare namespace JstlFmt {
         parseDate: NSP.TagFn<ParseDateTagAttr>;
     };
 
-    type Properties = { [key: string]: any };
+    interface ResourceBundle {
+        getString(key: string): string;
+    }
 
     interface TimeZone {
         getOffset(date: number | Date): number;
@@ -207,7 +209,7 @@ export declare namespace JstlFmt {
          * Localization context in whose resource
          * bundle the message key is looked up.
          */
-        bundle?: Properties;
+        bundle?: ResourceBundle;
 
         /**
          * Name of the exported scoped variable

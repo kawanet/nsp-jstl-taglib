@@ -32,18 +32,16 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * <fmt:setBundle basename="bundled" var="bundled"/>
              * <fmt:message key="key" bundle="${bundled}"/>
              */
-            if (key in bundle) {
-                message = bundle[key];
-            }
+            message = bundle.getString(key);
         } else if (varName) {
             /**
              * @example
              * <fmt:setBundle basename="messages" var="bundled"/>
              * <fmt:message key="key" var="bundled"/>
              */
-            const properties = context[varName];
-            if (properties && key in properties) {
-                message = properties[key];
+            const bundle2: JstlFmt.ResourceBundle = context[varName];
+            if (bundle2) {
+                message = bundle2.getString(key);
             }
         } else {
             /**
@@ -53,10 +51,12 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
              * </fmt:bundle>
              */
             const store = fmtBundleStore(tag.app, context);
-            const properties = store.find(prop => (key in prop));
-            if (properties) {
-                message = properties[key];
-            }
+
+            store.find(bundle => {
+                const {prefix} = bundle;
+                message = bundle.resource.getString(prefix ? prefix + key : key);
+                return (message != null);
+            });
         }
 
         if (message && params.length) {
