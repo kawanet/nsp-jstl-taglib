@@ -28,6 +28,6 @@ LICENSE:
 	curl -so $@ https://raw.githubusercontent.com/apache/tomcat-taglibs-standard/main/LICENSE
 
 clean:
-	/bin/rm -fr ./esm/*/ ./cjs/*/ types/index.d.ts
+	/bin/rm -fr esm/*/ cjs/*/ esm/*.js cjs/*.js types/index.d.ts
 
 .PHONY: all clean test
