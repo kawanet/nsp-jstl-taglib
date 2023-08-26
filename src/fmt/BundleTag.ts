@@ -23,7 +23,7 @@ export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
     return async (context) => {
         const {basename, prefix} = tag.attr(context);
 
-        let properties = tag.app.process<Properties>("fmt:bundle", basename);
+        let properties = await tag.app.process<Properties | Promise<Properties>>("fmt:bundle", basename);
 
         const store = fmtBundleStore(tag.app, context);
 

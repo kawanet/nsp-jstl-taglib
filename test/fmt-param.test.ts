@@ -24,7 +24,7 @@ describe(TITLE, () => {
         foo: propFoo,
     };
 
-    nsp.hook("fmt:bundle", (name: string) => props[name as keyof typeof props]);
+    nsp.hook("fmt:bundle", async (name: string) => props[name as keyof typeof props]);
 
     it('<fmt:param/>', async () => {
         const src: string = '<fmt:bundle basename="foo">[<fmt:message key="info"><fmt:param value="Foo"/><fmt:param value="Bar"/></fmt:message>]</fmt:bundle>';

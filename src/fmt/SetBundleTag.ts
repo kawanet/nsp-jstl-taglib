@@ -17,10 +17,10 @@ type Properties = JstlFmt.Properties;
  * <fmt:message key="key" var="bundled"/>
  */
 export const setBundleTag: NSP.TagFn<JstlFmt.SetBundleTagAttr> = (tag) => {
-    return (context) => {
+    return async (context) => {
         const {basename, var: varName} = tag.attr(context);
 
-        context[varName] = tag.app.process<Properties>("fmt:bundle", basename);
+        context[varName] = await tag.app.process<Properties | Promise<Properties>>("fmt:bundle", basename);
 
         return tag.body(context);
     };
