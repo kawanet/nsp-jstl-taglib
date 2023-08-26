@@ -1,7 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
-
-type Properties = JstlFmt.Properties;
+import {getBundle} from "./BundleTag.js";
 
 /**
  * <fmt:setBundle>
@@ -20,7 +19,7 @@ export const setBundleTag: NSP.TagFn<JstlFmt.SetBundleTagAttr> = (tag) => {
     return async (context) => {
         const {basename, var: varName} = tag.attr(context);
 
-        context[varName] = await tag.app.process<Properties | Promise<Properties>>("fmt:bundle", basename);
+        context[varName] = await getBundle(tag.app, basename, context);
 
         return tag.body(context);
     };

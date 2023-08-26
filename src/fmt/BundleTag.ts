@@ -1,10 +1,17 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
+import {fmtSetLocaleStore} from "./SetLocaleTag.js";
 
 type Properties = JstlFmt.Properties;
 
 export const fmtBundleStore = (app: NSP.App, context: any) => {
     return app.store<Properties>(context, "fmt:bundle");
+};
+
+export const getBundle = async (app: NSP.App, basename: string, context: any): Promise<Properties> => {
+    const locale = fmtSetLocaleStore(app, context).get();
+
+    return app.process<Properties | Promise<Properties>>("fmt:bundle", basename, locale?.locale);
 };
 
 /**
@@ -23,7 +30,7 @@ export const bundleTag: NSP.TagFn<JstlFmt.BundleTagAttr> = (tag) => {
     return async (context) => {
         const {basename, prefix} = tag.attr(context);
 
-        let properties = await tag.app.process<Properties | Promise<Properties>>("fmt:bundle", basename);
+        let properties = await getBundle(tag.app, basename, context);
 
         const store = fmtBundleStore(tag.app, context);
 
