@@ -2,6 +2,7 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
 import {fmtBundleStore} from "./BundleTag.js";
 import {fmtParamStore} from "./ParamTag.js";
+import {ResourceBundle} from "../lib/ResourceBundle.js";
 
 const UNDEFINED_KEY = "???";
 
@@ -15,7 +16,8 @@ const UNDEFINED_KEY = "???";
 export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
     return async (context) => {
         const attr = tag.attr(context);
-        const {bundle, var: varName} = attr;
+        const varName = attr.var;
+        const bundle = attr.bundle ?? context[varName];
 
         const store = fmtParamStore(tag.app, context);
         store.open([]);
@@ -27,22 +29,19 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
         let message: string = UNDEFINED_KEY + key + UNDEFINED_KEY;
 
         if (bundle) {
+            if (!ResourceBundle.isBundle(bundle)) {
+                throw new Error("Invalid ResourceBundle: " + bundle);
+            }
             /**
              * @example
              * <fmt:setBundle basename="bundled" var="bundled"/>
              * <fmt:message key="key" bundle="${bundled}"/>
-             */
-            message = bundle.getString(key);
-        } else if (varName) {
-            /**
+             *
              * @example
              * <fmt:setBundle basename="messages" var="bundled"/>
              * <fmt:message key="key" var="bundled"/>
              */
-            const bundle2: JstlFmt.ResourceBundle = context[varName];
-            if (bundle2) {
-                message = bundle2.getString(key);
-            }
+            message = bundle.getString(key);
         } else {
             /**
              * @example
