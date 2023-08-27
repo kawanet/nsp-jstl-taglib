@@ -9,13 +9,15 @@ describe(TITLE, () => {
         const nsp = createNSP();
 
         nsp.addTagLib({ns: "c", tag: cTags});
-        nsp.addTagLib({ns: "fn", fn: fnFunctions});
         nsp.addTagLib({ns: "fmt", tag: fmtTags});
+        nsp.addTagLib({ns: "fn", fn: fnFunctions});
+
+        const context = {title: "nsp", upper: true};
 
         const render = await nsp.loadJSP("test/resources/synopsis1.jsp");
 
-        const result = await render({title: "nsp", upper: true});
+        const html = await render(context);
 
-        assert.equal(result.trim(), `<h1>NSP</h1>`);
+        assert.equal(html.trim(), `<h1>NSP</h1>`);
     });
 });

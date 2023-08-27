@@ -19,12 +19,16 @@ import {cTags, fmtTags, fnFunctions} from "nsp-jstl-taglib";
 const nsp = createNSP();
 
 nsp.addTagLib({ns: "c", tag: cTags});
-nsp.addTagLib({ns: "fn", fn: fnFunctions});
 nsp.addTagLib({ns: "fmt", tag: fmtTags});
+nsp.addTagLib({ns: "fn", fn: fnFunctions});
 
-const render = await nsp.loadJSP("template.jsp");
+const context = {title: "nsp", upper: true};
 
-console.log(await render({title: "nsp", upper: true}));
+const render = await nsp.loadJSP("path/to/template.jsp");
+
+const html = await render(context);
+
+console.log(html);
 // => <h1>NSP</h1>
 ```
 
@@ -45,6 +49,74 @@ console.log(await render({title: "nsp", upper: true}));
 const {createNSP} = require("nsp-server-pages");
 const {cTags, fmtTags, fnFunctions} = require("nsp-jstl-taglib");
 ```
+
+## COMPATIBILITY
+
+### JSTL core library
+
+| tag             | status | note                                             |
+|-----------------|--------|--------------------------------------------------|
+| `<c:choose>`    | 👍 OK  |                                                  |
+| `<c:if>`        | 👍 OK  |                                                  |
+| `<c:import>`    | 👍 OK  |                                                  |
+| `<c:forEach>`   | 👍 OK  |                                                  |
+| `<c:forTokens>` | 👍 OK  |                                                  |
+| `<c:out>`       | 👍 OK  |                                                  |
+| `<c:otherwise>` | 👍 OK  |                                                  |
+| `<c:param>`     | 👍 OK  |                                                  |
+| `<c:redirect>`  | 🚫 N/A | consider such logic implemented outside the view |
+| `<c:remove>`    | 👍 OK  |                                                  |
+| `<c:set>`       | 👍 OK  |                                                  |
+| `<c:url>`       | 👍 OK  |                                                  |
+| `<c:when>`      | 👍 OK  |                                                  |
+
+### JSTL formatting library
+
+| tag                     | status     | note                                      |
+|-------------------------|------------|-------------------------------------------|
+| `<fmt:requestEncoding>` | 👍 OK      |                                           |
+| `<fmt:setLocale>`       | 👍 OK      |                                           |
+| `<fmt:timeZone>`        | 👍 OK      |                                           |
+| `<fmt:setTimeZone>`     | 👍 OK      |                                           |
+| `<fmt:bundle>`          | 👍 OK      | implement `ResourceBundle.getBundle` hook |
+| `<fmt:setBundle>`       | 👍 OK      | implement `ResourceBundle.getBundle` hook |
+| `<fmt:message>`         | 👍 OK      |                                           |
+| `<fmt:param>`           | 👍 OK      |                                           |
+| `<fmt:formatNumber>`    | 🕑 Not yet |                                           |
+| `<fmt:parseNumber>`     | 🕑 Not yet |                                           |
+| `<fmt:formatDate>`      | 👍 OK      | some feature missing                      |
+| `<fmt:parseDate>`       | 🕑 Not yet |                                           |
+
+Implement `ResourceBundle.getBundle` hook which returns an array of key-value pair properties.
+The hook is called by `<fmt:bundle>` and `<fmt:setBundle>` tags.
+
+```js
+nsp.hook("ResourceBundle.getBundle", async (basename) => {
+  const properties = {"key": "value"};
+  return [properties];
+});
+```
+
+### JSTL functions library
+
+| function                       | status | note                 |
+|--------------------------------|--------|----------------------|
+| `${ fn:contains() }`           | 👍 OK  | `String#includes`    |
+| `${ fn:containsIgnoreCase() }` | 👍 OK  |                      |
+| `${ fn:endsWith() }`           | 👍 OK  | `String#endsWith`    |
+| `${ fn:escapeXml() }`          | 👍 OK  | `Array#join`         |
+| `${ fn:indexOf() }`            | 👍 OK  |                      |
+| `${ fn:join() }`               | 👍 OK  |                      |
+| `${ fn:length() }`             | 👍 OK  |                      |
+| `${ fn:replace() }`            | 👍 OK  | `String#replace`     |
+| `${ fn:split() }`              | 👍 OK  | `String#split`       |
+| `${ fn:startsWith() }`         | 👍 OK  | `String#startsWith`  |
+| `${ fn:substring() }`          | 👍 OK  | `String#substring`   |
+| `${ fn:substringAfter() }`     | 👍 OK  |                      |
+| `${ fn:substringBefore() }`    | 👍 OK  |                      |
+| `${ fn:toLowerCase() }`        | 👍 OK  | `String#toLowerCase` |
+| `${ fn:toUpperCase() }`        | 👍 OK  | `String#toUpperCase` |
+| `${ fn:trim() }`               | 👍 OK  | `String#trim`        |
 
 ## LINKS
 
