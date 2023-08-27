@@ -12,6 +12,15 @@ describe(TITLE, () => {
 
     nsp.addTagLib({ns: "fmt", tag: fmtTags});
 
+    it("FormatDateTag", async () => {
+        const render = await nsp.loadJSP("test/resources/fmt/FormatDateTag.jsp");
+        const date = new Date("2023-04-05T06:07:08Z");
+        const context = {date};
+        const result = await render(context);
+        const expected = await fs.readFile("test/resources/fmt/FormatDateTag.txt", "utf8");
+        assert.equal(tweak(result), tweak(expected));
+    });
+
     it("FormatNumberTag", async () => {
         const render = await nsp.loadJSP("test/resources/fmt/FormatNumberTag.jsp");
         const context = {};

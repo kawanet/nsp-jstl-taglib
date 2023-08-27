@@ -43,6 +43,7 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         let result: string;
 
         if (pattern) {
+            dt = dt.handler(formatMap);
             result = applyPattern(dt, pattern);
         } else {
             const format = getFormatOptions(type, dateStyle, timeStyle);
@@ -80,7 +81,7 @@ const applyPattern = (dt: cdate.CDate, pattern: string): string => {
         }).join("");
     }
 
-    return dt.handler(formatMap).format(pattern);
+    return dt.format(pattern);
 };
 
 const G: cdate.Handler = dt => (dt.getFullYear() < 0 ? "BC" : "AD");
@@ -129,11 +130,13 @@ const formatMap: { [key: string]: string | ((dt: Date) => number | string) } = {
     dd: "%d",
 
     // Day of week in month (2)
-    // F: "-, // N/A
+    // F: "-", // N/A
 
     // Day name in week (Tuesday; Tue)
+    E: "%a",
+    EE: "%a",
     EEE: "%a",
-    EEEE: "%a",
+    EEEE: "%A",
 
     // Day number of week (1 = Monday, ..., 7 = Sunday) (1)
     u: "%u",
@@ -178,14 +181,14 @@ const formatMap: { [key: string]: string | ((dt: Date) => number | string) } = {
     zzzz: "%:z",
 
     // RFC 822 Time zone (-0800)
-    Z: "%z",
+    Z: "%z", // +0800
     ZZ: "%z",
     ZZZ: "%z",
 
     // ISO 8601 Time Zone (-08; -0800; -08:00)
     X: "%:z",
     XX: "%:z",
-    XXX: "%:z",
+    XXX: "%:z", // +08:00
 
     // escape
     "%": "%%",

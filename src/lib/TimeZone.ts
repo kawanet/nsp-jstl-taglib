@@ -20,25 +20,21 @@ export abstract class TimeZone implements JstlFmt.TimeZone {
         this.displayName = id;
     }
 
-    protected abstract cdateFn(): cdate.cdate;
-
     getDisplayName(): string {
         return this.displayName;
     }
 
-    getOffset(date: number | Date): number {
-        return this.cdateFn()(date).utcOffset() * 60000;
-    }
+    abstract getOffset(date: number | Date): number ;
 }
 
 class TimeZoneByName extends TimeZone {
-    cdateFn() {
-        return cdate().tz(this.getDisplayName()).cdateFn();
+    getOffset(date: number | Date): number {
+        return cdate(date).tz(this.getDisplayName()).utcOffset() * 60000;
     }
 }
 
 class TimeZoneByOffset extends TimeZone {
-    cdateFn() {
-        return cdate().utcOffset(this.getDisplayName()).cdateFn();
+    getOffset(date: number | Date): number {
+        return cdate(date).utcOffset(this.getDisplayName()).utcOffset() * 60000;
     }
 }
