@@ -7,7 +7,7 @@
 
 - JSTL core library - e.g. `<c:if test="${test}"></c:if>`
 - JSTL formatting library - e.g. `<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>`
-- JSTL functions library - e.g. `${fn:toUpperCase("abc")}`
+- JSTL functions library - e.g. `${ fn:toUpperCase("abc") }`
 - See [TypeScript declaration files](https://github.com/kawanet/nsp-jstl-taglib/blob/main/types/) for API detail.
 
 ## SYNOPSIS
@@ -64,11 +64,13 @@ const {cTags, fmtTags, fnFunctions} = require("nsp-jstl-taglib");
 | `<c:out>`       | 👍 OK  |                                                  |
 | `<c:otherwise>` | 👍 OK  |                                                  |
 | `<c:param>`     | 👍 OK  |                                                  |
-| `<c:redirect>`  | 🚫 N/A | consider such logic implemented outside the view |
+| `<c:redirect>`  | 🚫 N/A | not available by design                          |
 | `<c:remove>`    | 👍 OK  |                                                  |
 | `<c:set>`       | 👍 OK  |                                                  |
 | `<c:url>`       | 👍 OK  |                                                  |
 | `<c:when>`      | 👍 OK  |                                                  |
+
+`scope="xxx"` attribute is just ignored as nsp supports only `request` scope.
 
 ### JSTL formatting library
 
@@ -84,29 +86,31 @@ const {cTags, fmtTags, fnFunctions} = require("nsp-jstl-taglib");
 | `<fmt:param>`           | 👍 OK      |                                           |
 | `<fmt:formatNumber>`    | 🕑 Not yet |                                           |
 | `<fmt:parseNumber>`     | 🕑 Not yet |                                           |
-| `<fmt:formatDate>`      | 👍 OK      | some feature missing                      |
+| `<fmt:formatDate>`      | 👍 OK      | works mostly. some feature still missing  |
 | `<fmt:parseDate>`       | 🕑 Not yet |                                           |
 
 Implement `ResourceBundle.getBundle` hook which returns an array of key-value pair properties.
 The hook is called by `<fmt:bundle>` and `<fmt:setBundle>` tags.
 
 ```js
+const nsp = createNSP();
+
 nsp.hook("ResourceBundle.getBundle", async (basename) => {
-  const properties = {"key": "value"};
-  return [properties];
+    const properties = {"key": "value"};
+    return [properties];
 });
 ```
 
 ### JSTL functions library
 
-| function                       | status | note                 |
+| function                       | status | equivalant method    |
 |--------------------------------|--------|----------------------|
 | `${ fn:contains() }`           | 👍 OK  | `String#includes`    |
 | `${ fn:containsIgnoreCase() }` | 👍 OK  |                      |
 | `${ fn:endsWith() }`           | 👍 OK  | `String#endsWith`    |
-| `${ fn:escapeXml() }`          | 👍 OK  | `Array#join`         |
-| `${ fn:indexOf() }`            | 👍 OK  |                      |
-| `${ fn:join() }`               | 👍 OK  |                      |
+| `${ fn:escapeXml() }`          | 👍 OK  |                      |
+| `${ fn:indexOf() }`            | 👍 OK  | `String#indexOf`     |
+| `${ fn:join() }`               | 👍 OK  | `Array#join`         |
 | `${ fn:length() }`             | 👍 OK  |                      |
 | `${ fn:replace() }`            | 👍 OK  | `String#replace`     |
 | `${ fn:split() }`              | 👍 OK  | `String#split`       |
