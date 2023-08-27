@@ -34,6 +34,10 @@ describe(TITLE, () => {
         expected = "[2023-04-05 06:07:08]";
         assert.equal(await render(ctx), expected, tz);
 
+        ctx.tz = tz = "GMT+00:00";
+        expected = "[2023-04-05 06:07:08]";
+        assert.equal(await render(ctx), expected, tz);
+
         ctx.tz = tz = "Asia/Tokyo";
         expected = "[2023-04-05 15:07:08]";
         assert.equal(await render(ctx), expected, tz);

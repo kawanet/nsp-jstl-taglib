@@ -65,6 +65,11 @@ describe(TITLE, () => {
         assert.equal(cdate().utc().cdateFn()(utc).text(fmt), expected, `utc()`);
         assert.equal(await render(ctx), expected, tz);
 
+        ctx.tz = tz = "GMT+00:00";
+        expected = "[2023-04-05T06:07:08+00:00]";
+        assert.equal(cdate().utc().cdateFn()(utc).text(fmt), expected, `utc()`);
+        assert.equal(await render(ctx), expected, tz);
+
         ctx.tz = tz = "Asia/Tokyo";
         expected = "[2023-04-05T15:07:08+09:00]";
         assert.equal(cdate().tz(tz).cdateFn()(utc).text(fmt), expected, `tz(${tz})`);
