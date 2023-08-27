@@ -249,7 +249,7 @@ export declare namespace JstlFmt {
         /**
          * Numeric value to be formatted.
          */
-        value?: string;
+        value?: string | number;
 
         /**
          * Specifies whether the value is to be
@@ -287,25 +287,25 @@ export declare namespace JstlFmt {
          * Maximum number of digits in the integer
          * portion of the formatted output.
          */
-        maxIntegerDigits?: string;
+        maxIntegerDigits?: string | number;
 
         /**
          * Minimum number of digits in the integer
          * portion of the formatted output.
          */
-        minIntegerDigits?: string;
+        minIntegerDigits?: string | number;
 
         /**
          * Maximum number of digits in the
          * fractional portion of the formatted output.
          */
-        maxFractionDigits?: string;
+        maxFractionDigits?: string | number;
 
         /**
          * Minimum number of digits in the
          * fractional portion of the formatted output.
          */
-        minFractionDigits?: string;
+        minFractionDigits?: string | number;
 
         /**
          * Name of the exported scoped variable

@@ -18,4 +18,6 @@
         [<fmt:formatNumber var="foo"> 12345.6789 </fmt:formatNumber>]
         [${foo}]
     </li>
+    <li><fmt:formatNumber value="12345.6789" pattern="##,###.##"/></li>
+    <li><fmt:formatNumber value="12345.6789" pattern="##,###.######"/></li>
 </ul>

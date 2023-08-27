@@ -12,20 +12,21 @@ const typeToStyle: { [type: string]: string } = {
  *
  * @description
  * Formats a numeric value as a number, currency, or percentage
- *
- * Note:
- * - not supported: `maxIntegerDigits`, `currencySymbol` attributes
  */
 export const formatNumberTag: NSP.TagFn<JstlFmt.FormatNumberTagAttr> = (tag) => {
     return async (context) => {
-        const {value, type, maxFractionDigits, minFractionDigits, minIntegerDigits, var: varName, currencyCode} = tag.attr(context);
+        const {value, type, pattern, var: varName, currencyCode} = tag.attr(context);
+        let {maxFractionDigits, minFractionDigits, minIntegerDigits} = tag.attr(context);
 
         const store = fmtSetLocaleStore(tag.app, context);
         const locale = store.get()?.getLanguage();
-        const locales = [locale];
 
         const tyleL = type?.toLowerCase();
         const style = typeToStyle[tyleL] || tyleL;
+
+        if (/\.#/.test(pattern)) {
+            maxFractionDigits = pattern.replace(/^.*\./s, "").replace(/[^#]/g, "").length;
+        }
 
         const options: Intl.NumberFormatOptions = {};
         if (style) options.style = style;
@@ -37,7 +38,7 @@ export const formatNumberTag: NSP.TagFn<JstlFmt.FormatNumberTagAttr> = (tag) => 
         // if value is specified, body is not evaluated
         const input = value ?? await tag.body(context);
 
-        const result = new Intl.NumberFormat(locales, options).format(+input);
+        const result = new Intl.NumberFormat(locale, options).format(+input);
 
         if (varName) {
             context[varName] = result;

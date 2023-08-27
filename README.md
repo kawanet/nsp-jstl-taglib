@@ -84,7 +84,7 @@ const {cTags, fmtTags, fnFunctions} = require("nsp-jstl-taglib");
 | `<fmt:setBundle>`       | 👍 OK      | implement `ResourceBundle.getBundle` hook |
 | `<fmt:message>`         | 👍 OK      |                                           |
 | `<fmt:param>`           | 👍 OK      |                                           |
-| `<fmt:formatNumber>`    | 👍 OK      | `maxIntegerDigits`, `currencySymbol` not supported |
+| `<fmt:formatNumber>`    | 👍 OK      | works mostly. some feature still missing  |
 | `<fmt:parseNumber>`     | 🕑 Not yet |                                           |
 | `<fmt:formatDate>`      | 👍 OK      | works mostly. some feature still missing  |
 | `<fmt:parseDate>`       | 🕑 Not yet |                                           |
@@ -125,8 +125,8 @@ nsp.hook("ResourceBundle.getBundle", async (basename) => {
 ## LINKS
 
 - https://github.com/kawanet/nsp-server-pages
-- https://github.com/kawanet/nsp-struts1-taglib
 - https://github.com/kawanet/nsp-jstl-taglib
+- https://github.com/kawanet/nsp-struts1-taglib
 - https://www.npmjs.com/package/nsp-jstl-taglib
 - https://github.com/apache/tomcat-taglibs-standard/
 - https://github.com/apache/tomcat-taglibs-standard/tree/main/impl/src/main/java/org/apache/taglibs/standard
