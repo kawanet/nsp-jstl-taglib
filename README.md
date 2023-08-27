@@ -84,7 +84,7 @@ const {cTags, fmtTags, fnFunctions} = require("nsp-jstl-taglib");
 | `<fmt:setBundle>`       | 👍 OK      | implement `ResourceBundle.getBundle` hook |
 | `<fmt:message>`         | 👍 OK      |                                           |
 | `<fmt:param>`           | 👍 OK      |                                           |
-| `<fmt:formatNumber>`    | 🕑 Not yet |                                           |
+| `<fmt:formatNumber>`    | 👍 OK      | `maxIntegerDigits`, `currencySymbol` not supported |
 | `<fmt:parseNumber>`     | 🕑 Not yet |                                           |
 | `<fmt:formatDate>`      | 👍 OK      | works mostly. some feature still missing  |
 | `<fmt:parseDate>`       | 🕑 Not yet |                                           |
