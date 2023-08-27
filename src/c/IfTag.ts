@@ -18,9 +18,14 @@ const isTrue = (v: any): v is true => (!!v && v !== "false");
  */
 export const ifTag: NSP.TagFn<JstlC.IfTagAttr> = tag => {
     return context => {
-        const {test} = tag.attr(context);
+        const {test, var: varName} = tag.attr(context);
 
-        if (isTrue(test)) {
+        const result = isTrue(test);
+        if (varName) {
+            context[varName] = result;
+        }
+
+        if (result) {
             return tag.body(context);
         } else {
             return "";
