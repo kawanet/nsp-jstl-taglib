@@ -2,8 +2,8 @@ import {cdate} from "cdate";
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
-import {fmtSetTimeZoneStore} from "./TimeZoneTag.js";
 import {fmtSetLocaleStore} from "./SetLocaleTag.js";
+import {fmtSetTimeZoneStore} from "./TimeZoneTag.js";
 
 /**
  * <fmt:formatDate>

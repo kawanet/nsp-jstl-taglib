@@ -1,8 +1,8 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
+import {ResourceBundle} from "../lib/ResourceBundle.js";
 import {fmtBundleStore} from "./BundleTag.js";
 import {fmtParamStore} from "./ParamTag.js";
-import {ResourceBundle} from "../lib/ResourceBundle.js";
 
 const UNDEFINED_KEY = "???";
 

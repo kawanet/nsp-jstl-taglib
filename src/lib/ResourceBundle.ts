@@ -1,5 +1,5 @@
-import type {JstlFmt} from "../../index.js";
 import type {NSP} from "nsp-server-pages";
+import type {JstlFmt} from "../../index.js";
 import type {Locale} from "./Locale";
 
 type Properties = { [key: string]: string };
