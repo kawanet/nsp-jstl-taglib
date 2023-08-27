@@ -27,6 +27,8 @@ export declare namespace JstlFmt {
     }
 
     interface TimeZone {
+        getDisplayName(): string;
+
         getOffset(date: number | Date): number;
     }
 
@@ -387,7 +389,7 @@ export declare namespace JstlFmt {
         /**
          * Date and/or time to be formatted.
          */
-        value: number | Date;
+        value: string | number | Date;
 
         /**
          * Specifies whether the time, the date, or both

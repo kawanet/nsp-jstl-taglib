@@ -25,23 +25,25 @@ describe(TITLE, () => {
         utc: new Date("2023-04-05T06:07:08Z"),
     };
 
-    it('type="DATE', async () => {
-        const src: string = '[<fmt:formatDate value="${local}" type="DATE"/>]';
+    const setLocale = `<fmt:setLocale value="en"/>`;
+
+    it('type="DATE"', async () => {
+        const src: string = setLocale + '[<fmt:formatDate value="${local}" type="DATE" />]';
         // console.warn(nsp.parse(src).toJS());
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(await render(ctx), "[2023-04-05]");
+        assert.equal(await render(ctx), "[Apr 5, 2023]");
     });
 
     it('type="TIME"', async () => {
-        const src: string = '[<fmt:formatDate value="${local}" type="TIME"/>]';
+        const src: string = setLocale + '[<fmt:formatDate value="${local}" type="TIME"/>]';
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(await render(ctx), "[06:07:08]");
+        assert.equal(await render(ctx), "[6:07:08 AM]");
     });
 
     it('type="BOTH"', async () => {
-        const src: string = '[<fmt:formatDate value="${local}" type="BOTH"/>]';
+        const src: string = setLocale + '[<fmt:formatDate value="${local}" type="BOTH"/>]';
         const render = nsp.parse(src).toFn<Context>();
-        assert.equal(await render(ctx), "[Wed Apr  5 06:07:08 2023]");
+        assert.equal(await render(ctx), "[Apr 5, 2023, 6:07:08 AM]");
     });
 
     it('pattern="yyyy-MM-dd hh:mm:ss"', async () => {

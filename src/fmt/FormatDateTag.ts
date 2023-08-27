@@ -45,8 +45,19 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
         if (pattern) {
             result = applyPattern(dt, pattern);
         } else {
-            const format = getFormat(type, dateStyle, timeStyle);
-            result = dt.text(format);
+            const format = getFormatOptions(type, dateStyle, timeStyle);
+
+            try {
+                // use Intl.DateTimeFormat per default
+                if (tz) format.timeZone = tz.getDisplayName();
+                result = new Intl.DateTimeFormat(locale, format).format(dt.toDate());
+            } catch (e) {
+                // fallback to strftime
+                // RangeError: Invalid time zone specified: GMT+09:00
+                const {dateStyle, timeStyle} = format;
+                const pattern = (dateStyle && timeStyle) ? "%c" : timeStyle ? "%H:%M:%S" : "%Y-%m-%d";
+                result = dt.text(pattern);
+            }
         }
 
         if (varName) {
@@ -180,17 +191,24 @@ const formatMap: { [key: string]: string | ((dt: Date) => number | string) } = {
     "%": "%%",
 };
 
-const getFormat = (type: string, dateStyle: string, timeStyle: string) => {
+const getFormatOptions = (type: string, dateStyle: string, timeStyle: string): Intl.DateTimeFormatOptions => {
     type = type?.toLowerCase() || "date";
 
-    dateStyle ||= "default";
-    timeStyle ||= "default";
+    dateStyle ||= "medium";
+    timeStyle ||= "medium";
 
-    if (type === "date") {
-        timeStyle = null;
-    } else if (type === "time") {
-        dateStyle = null;
-    }
+    dateStyle = dateStyle.toLowerCase();
+    timeStyle = timeStyle.toLowerCase();
 
-    return (dateStyle && timeStyle) ? "%c" : timeStyle ? "%H:%M:%S" : "%Y-%m-%d";
+    if (dateStyle === "default") dateStyle = "medium";
+    if (timeStyle === "default") timeStyle = "medium";
+
+    if (type === "date") timeStyle = null;
+    if (type === "time") dateStyle = null;
+
+    let options: Intl.DateTimeFormatOptions = {};
+    if (timeStyle) options.timeStyle = timeStyle as any;
+    if (dateStyle) options.dateStyle = dateStyle as any;
+
+    return options;
 };
