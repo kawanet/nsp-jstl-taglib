@@ -2,10 +2,6 @@
  * @see https://github.com/kawanet/nsp-jstl-taglib
  */
 
-import type {JstlC} from "./types/c.js";
-import type {JstlFmt} from "./types/fmt.js";
-import type {JstlFn} from "./types/fn.js";
-import type {JstlUtil} from "./types/util.js";
 import {catchTag} from "./src/c/CatchTag.js";
 import {chooseTag} from "./src/c/ChooseTag.js";
 import {forEachTag} from "./src/c/ForEachTag.js";
@@ -24,6 +20,7 @@ import {bundleTag} from "./src/fmt/BundleTag.js";
 import {formatDateTag} from "./src/fmt/FormatDateTag.js";
 import {formatNumberTag} from "./src/fmt/FormatNumberTag.js";
 import {messageTag} from "./src/fmt/MessageTag.js";
+import {paramTag as fmt_paramTag} from "./src/fmt/ParamTag.js";
 import {parseDateTag} from "./src/fmt/ParseDateTag.js";
 import {parseNumberTag} from "./src/fmt/ParseNumberTag.js";
 import {requestEncodingTag} from "./src/fmt/RequestEncodingTag.js";
@@ -31,8 +28,11 @@ import {setBundleTag} from "./src/fmt/SetBundleTag.js";
 import {setLocaleTag} from "./src/fmt/SetLocaleTag.js";
 import {setTimeZoneTag} from "./src/fmt/SetTimeZoneTag.js";
 import {timeZoneTag} from "./src/fmt/TimeZoneTag.js";
-import {paramTag as fmt_paramTag} from "./src/fmt/ParamTag.js";
 import * as fn from "./src/fn/Functions.js";
+import type {JstlC} from "./types/c.js";
+import type {JstlFmt} from "./types/fmt.js";
+import type {JstlFn} from "./types/fn.js";
+import type {JstlUtil} from "./types/util.js";
 
 export type {JstlC, JstlFmt, JstlFn, JstlUtil};
 
