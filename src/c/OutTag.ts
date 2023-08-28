@@ -3,8 +3,8 @@
  */
 
 import type {NSP} from "nsp-server-pages";
-import {$$} from "telesy";
 import type {JstlC} from "../../index.js";
+import {escapeXmlFn} from "../fn/Functions.js";
 
 const isFalse = (v: any): v is false => (v === false || v === "false");
 
@@ -26,7 +26,7 @@ export const outTag: NSP.TagFn<JstlC.OutTagAttr> = tag => {
         const attr = tag.attr(context);
         const {value, escapeXml} = attr;
 
-        const filter = (v: string) => (v != null && !isFalse(escapeXml)) ? $$(v) : v;
+        const filter: ((s: string) => string) = isFalse(escapeXml) ? (v => v) : escapeXmlFn;
 
         const result = (v: string | Promise<string>) => isPromise(v) ? v.then(trim).then(filter) : filter(trim(v));
 

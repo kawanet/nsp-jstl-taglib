@@ -46,7 +46,7 @@ export const endsWithFn: JstlFn.endsWithFn = (input, suffix) => {
  * ${fn:escapeXml(param:info)}
  */
 export const escapeXmlFn: JstlFn.escapeXmlFn = (input) => {
-    return $$(input);
+    if (input != null) return $$(String(input));
 };
 
 /**
