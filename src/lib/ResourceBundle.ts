@@ -1,21 +1,20 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../../index.js";
+import type {JstlUtil} from "../../index.js";
 import type {Locale} from "./Locale";
 
-
-export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
+export abstract class ResourceBundle implements JstlUtil.ResourceBundle {
     protected abstract handleGetObject(key: string): any;
 
     public abstract getKeys(): string[];
 
     protected parent: ResourceBundle = null;
 
-    static isBundle(v: any): v is JstlFmt.ResourceBundle {
+    static isBundle(v: any): v is JstlUtil.ResourceBundle {
         return (!!v && "function" === typeof v.handleGetObject && "function" === typeof v.getKeys);
     }
 
-    static async getBundle(basename: string, locale: Locale, app: NSP.App): Promise<JstlFmt.ResourceBundle> {
-        type P = Promise<JstlFmt.ResourceBundle | { [key: string]: string }[]>;
+    static async getBundle(basename: string, locale: Locale, app: NSP.App): Promise<JstlUtil.ResourceBundle> {
+        type P = Promise<JstlUtil.ResourceBundle | { [key: string]: string }[]>;
         const resource = await app.process<P>("ResourceBundle.getBundle", basename, locale);
 
         if (ResourceBundle.isBundle(resource)) {

@@ -1,5 +1,5 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../../index.js";
+import type {JstlFmt, JstlUtil} from "../../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
 
 /**
@@ -13,7 +13,7 @@ export const setTimeZoneTag: NSP.TagFn<JstlFmt.SetTimeZoneTagAttr> = (tag) => {
     return (context) => {
         const {value, var: varName} = tag.attr(context);
 
-        let tz: JstlFmt.TimeZone;
+        let tz: JstlUtil.TimeZone;
         if (value) {
             tz = TimeZone.getTimeZone(value);
         } else {

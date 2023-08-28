@@ -5,6 +5,7 @@
 import type {JstlC} from "./types/c.js";
 import type {JstlFmt} from "./types/fmt.js";
 import type {JstlFn} from "./types/fn.js";
+import type {JstlUtil} from "./types/util.js";
 import {catchTag} from "./src/c/CatchTag.js";
 import {chooseTag} from "./src/c/ChooseTag.js";
 import {forEachTag} from "./src/c/ForEachTag.js";
@@ -33,7 +34,7 @@ import {timeZoneTag} from "./src/fmt/TimeZoneTag.js";
 import {paramTag as fmt_paramTag} from "./src/fmt/ParamTag.js";
 import * as fn from "./src/fn/Functions.js";
 
-export type {JstlC, JstlFmt, JstlFn};
+export type {JstlC, JstlFmt, JstlFn, JstlUtil};
 
 export const cTags: JstlC.cTags = {
     catch: catchTag,

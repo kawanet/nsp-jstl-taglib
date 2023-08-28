@@ -1,6 +1,6 @@
 import {cdate} from "cdate";
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../../index.js";
+import type {JstlFmt, JstlUtil} from "../../index.js";
 import {TimeZone} from "../lib/TimeZone.js";
 import {fmtSetLocaleStore} from "./SetLocaleTag.js";
 import {fmtSetTimeZoneStore} from "./TimeZoneTag.js";
@@ -21,7 +21,7 @@ export const formatDateTag: NSP.TagFn<JstlFmt.FormatDateTagAttr> = (tag) => {
             return tag.body(context);
         }
 
-        let tz: JstlFmt.TimeZone;
+        let tz: JstlUtil.TimeZone;
         if (timeZone) {
             tz = TimeZone.getTimeZone(timeZone);
         } else {

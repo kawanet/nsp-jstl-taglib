@@ -1,12 +1,12 @@
 import {cdate} from "cdate";
-import type {JstlFmt} from "../../index.js";
+import type {JstlUtil} from "../../index.js";
 
-const isTimeZone = (tz: any): tz is JstlFmt.TimeZone => ("function" === typeof tz?.getDisplayName);
+const isTimeZone = (tz: any): tz is JstlUtil.TimeZone => ("function" === typeof tz?.getDisplayName);
 
-export abstract class TimeZone implements JstlFmt.TimeZone {
+export abstract class TimeZone implements JstlUtil.TimeZone {
     protected displayName: string;
 
-    static getTimeZone(id: string | JstlFmt.TimeZone): JstlFmt.TimeZone {
+    static getTimeZone(id: string | JstlUtil.TimeZone): JstlUtil.TimeZone {
         if (isTimeZone(id)) {
             return id;
         } else if (/^GMT|^(?:GMT)?([+-])(\d+)(?::(\d+))?/.test(id)) {

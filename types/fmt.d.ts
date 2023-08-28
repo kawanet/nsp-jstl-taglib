@@ -1,4 +1,5 @@
 import type {NSP} from "nsp-server-pages";
+import type {JstlUtil} from "./util.js";
 
 /**
  * fmt
@@ -31,19 +32,7 @@ export declare namespace JstlFmt {
          *     return `v => { v[${tag.attr.get("var")}] = ${tag.attr.get("value")} }`;
          * });
          */
-        hook(type: "ResourceBundle.getBundle", fn: (baseName: string, locale: string) => Promise<ResourceBundle | { [key: string]: string }[]>): void;
-    }
-
-    interface ResourceBundle {
-        getKeys(): string[];
-
-        getString(key: string): string;
-    }
-
-    interface TimeZone {
-        getDisplayName(): string;
-
-        getOffset(date: number | Date): number;
+        hook(type: "ResourceBundle.getBundle", fn: (baseName: string, locale: string) => Promise<JstlUtil.ResourceBundle | { [key: string]: string }[]>): void;
     }
 
     /**
@@ -113,7 +102,7 @@ export declare namespace JstlFmt {
          * java.util.TimeZone for more information on
          * supported time zone formats.
          */
-        value: string | TimeZone;
+        value: string | JstlUtil.TimeZone;
     }
 
     /**
@@ -133,7 +122,7 @@ export declare namespace JstlFmt {
          * more information on supported time zone
          * formats.
          */
-        value: string | TimeZone;
+        value: string | JstlUtil.TimeZone;
 
         /**
          * Name of the exported scoped variable which
@@ -225,7 +214,7 @@ export declare namespace JstlFmt {
          * Localization context in whose resource
          * bundle the message key is looked up.
          */
-        bundle?: ResourceBundle;
+        bundle?: JstlUtil.ResourceBundle;
 
         /**
          * Name of the exported scoped variable
@@ -441,7 +430,7 @@ export declare namespace JstlFmt {
          * Time zone in which to represent the formatted
          * time.
          */
-        timeZone?: string | TimeZone;
+        timeZone?: string | JstlUtil.TimeZone;
 
         /**
          * Name of the exported scoped variable which

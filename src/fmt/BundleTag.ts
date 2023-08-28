@@ -1,10 +1,10 @@
 import type {NSP} from "nsp-server-pages";
-import type {JstlFmt} from "../../index.js";
+import type {JstlFmt, JstlUtil} from "../../index.js";
 import {ResourceBundle} from "../lib/ResourceBundle.js";
 import {fmtSetLocaleStore} from "./SetLocaleTag.js";
 
 interface Bundle {
-    resource: JstlFmt.ResourceBundle;
+    resource: JstlUtil.ResourceBundle;
     prefix?: string;
 }
 
