@@ -10,4 +10,22 @@ export declare namespace JstlUtil {
 
         getOffset(date: number | Date): number;
     }
+
+    interface LoopTagStatus<T> {
+        getCurrent(): T;
+
+        getIndex(): number;
+
+        getCount(): number;
+
+        isFirst(): boolean;
+
+        isLast(): boolean;
+
+        getBegin(): number;
+
+        getEnd(): number;
+
+        getStep(): number;
+    }
 }

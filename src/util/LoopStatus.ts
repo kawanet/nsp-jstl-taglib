@@ -1,37 +1,36 @@
-interface LoopTagOptions<T> {
+import type {JstlUtil} from "../../index.js";
+
+interface LoopStatusOptions<T> {
     items: T[];
     begin: number | string;
     end: number | string;
     step: number | string;
 }
 
-export class LoopTagStatus<T> {
-    items: T[];
+export class LoopStatus<T> implements JstlUtil.LoopTagStatus<T> {
+    protected items: T[];
+
     current: T;
     index: number;
+    count: number;
     begin: number;
     end: number;
     step: number;
 
-    constructor(options: LoopTagOptions<T>) {
+    constructor(options: LoopStatusOptions<T>) {
         const items = this.items = options.items;
         this.current = null;
         this.index = null;
+        this.count = 0;
         this.begin = +options.begin || 0;
         this.end = +options.end || items.length - 1;
         this.step = +options.step || 1;
     }
 
-    start() {
-        const index = this.index = this.begin;
-        if (index <= this.end) {
-            return this.current = this.items[index];
-        }
-    }
-
     next(): T {
         let {index} = this;
         index = this.index = (index == null) ? this.begin : index + this.step;
+        this.count++;
         if (index <= this.end) {
             return this.current = this.items[index];
         }
@@ -43,6 +42,10 @@ export class LoopTagStatus<T> {
 
     getCurrent(): T {
         return this.current;
+    }
+
+    getCount(): number {
+        return this.count;
     }
 
     isFirst(): boolean {

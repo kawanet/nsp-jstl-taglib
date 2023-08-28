@@ -34,18 +34,18 @@ describe(TITLE, () => {
     it('<c:forEach>', async () => {
         const src: string = '<c:forEach items="${list}" var="item">[${ item.name }]</c:forEach>';
         // console.warn(nsp.parse(src).toJS());
-        assert.equal(nsp.parse(src).toFn()(ctx), "[Foo][Bar][Buz][Qux][Quux]");
+        assert.equal(await nsp.parse(src).toFn()(ctx), "[Foo][Bar][Buz][Qux][Quux]");
     });
 
     it('<c:forEach begin="1">', async () => {
         const src: string = '<c:forEach items="${list}" var="item" begin="1" end="3" step="2">[${ item.name }]</c:forEach>';
         // console.warn(nsp.parse(src).toJS());
-        assert.equal(nsp.parse(src).toFn()(ctx), "[Bar][Qux]");
+        assert.equal(await nsp.parse(src).toFn()(ctx), "[Bar][Qux]");
     });
 
     it('<c:forEach varStatus="status">', async () => {
         const src: string = '<c:forEach items="${list}" varStatus="status" begin="1" end="3" step="2">[${ status.index }]</c:forEach>';
         // console.warn(nsp.parse(src).toJS());
-        assert.equal(nsp.parse(src).toFn()(ctx), "[1][3]");
+        assert.equal(await nsp.parse(src).toFn()(ctx), "[1][3]");
     });
 });
