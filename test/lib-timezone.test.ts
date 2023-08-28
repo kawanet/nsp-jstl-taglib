@@ -1,5 +1,5 @@
 import {strict as assert} from "assert";
-import {TimeZone} from "../src/lib/TimeZone.js";
+import {TimeZone} from "../src/util/TimeZone.js";
 
 const TITLE = "lib-timezone.test.ts";
 

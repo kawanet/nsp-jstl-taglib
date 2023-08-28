@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlFmt, JstlUtil} from "../../index.js";
-import {TimeZone} from "../lib/TimeZone.js";
+import {TimeZone} from "../util/TimeZone.js";
 
 /**
  * <fmt:setTimeZone>

@@ -1,7 +1,7 @@
 import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
 import {fmtTags} from "../index.js";
-import type {TimeZone} from "../src/lib/TimeZone.js";
+import type {TimeZone} from "../src/util/TimeZone.js";
 
 const TITLE = "fmt-setTimeZone.test.ts";
 
