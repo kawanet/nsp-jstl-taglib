@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../../index.js";
-import {LoopStatus} from "../util/LoopStatus.js";
+import {getLoopStatus} from "../util/LoopStatus.js";
 
 /**
  * <c:forTokens>
@@ -20,7 +20,7 @@ export const forTokensTag: NSP.TagFn<JstlC.ForTokensTagAttr> = (tag) => {
         const {begin, end, step, varStatus} = attr;
         const varName = attr.var;
 
-        const status = new LoopStatus({items, begin, end, step});
+        const status = getLoopStatus({items, begin, end, step});
         if (varStatus) context[varStatus] = status;
 
         const results: (string | Promise<string>)[] = [];

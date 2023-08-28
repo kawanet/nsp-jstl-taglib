@@ -7,7 +7,9 @@ interface LoopStatusOptions<T> {
     step: number | string;
 }
 
-export class LoopStatus<T> implements JstlUtil.LoopTagStatus<T> {
+export const getLoopStatus = <T>(options: LoopStatusOptions<T>) => new LoopStatus<T>(options);
+
+class LoopStatus<T> implements JstlUtil.LoopTagStatus<T> {
     protected items: T[];
 
     current: T;
