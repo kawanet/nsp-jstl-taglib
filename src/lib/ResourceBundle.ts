@@ -5,9 +5,13 @@ import type {Locale} from "./Locale";
 type Properties = { [key: string]: string };
 
 export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
-    abstract getString(key: string): string;
+    protected abstract handleGetObject(key: string): any;
 
-    static isBundle = (v: any): v is JstlFmt.ResourceBundle => (v && "function" === typeof v.getString);
+    public abstract getKeys(): string[];
+
+    static isBundle(v: any): v is JstlFmt.ResourceBundle {
+        return (!!v && "function" === typeof v.handleGetObject && "function" === typeof v.getKeys);
+    }
 
     static async getBundle(basename: string, locale: Locale, app: NSP.App): Promise<JstlFmt.ResourceBundle> {
         const resource = await app.process<Promise<JstlFmt.ResourceBundle | Properties[]>>("ResourceBundle.getBundle", basename, locale);
@@ -24,6 +28,10 @@ export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
             throw new Error(`Invalid ResourceBundle for "${basename}"`);
         }
     }
+
+    getString(key: string): string {
+        return this.handleGetObject(key);
+    }
 }
 
 class PropertyResource extends ResourceBundle {
@@ -31,11 +39,15 @@ class PropertyResource extends ResourceBundle {
         super();
     }
 
-    getString(key: string): string {
+    handleGetObject(key: string) {
         for (const properties of this.properties) {
             if (key in properties) {
                 return properties[key];
             }
         }
+    }
+
+    getKeys(): string[] {
+        return Object.keys(this.properties[0]);
     }
 }

@@ -23,6 +23,8 @@ export declare namespace JstlFmt {
     };
 
     interface ResourceBundle {
+        getKeys(): string[];
+
         getString(key: string): string;
     }
 
