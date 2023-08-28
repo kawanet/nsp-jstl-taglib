@@ -9,6 +9,8 @@ export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
 
     public abstract getKeys(): string[];
 
+    protected parent: ResourceBundle = null;
+
     static isBundle(v: any): v is JstlFmt.ResourceBundle {
         return (!!v && "function" === typeof v.handleGetObject && "function" === typeof v.getKeys);
     }
@@ -16,38 +18,58 @@ export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
     static async getBundle(basename: string, locale: Locale, app: NSP.App): Promise<JstlFmt.ResourceBundle> {
         const resource = await app.process<Promise<JstlFmt.ResourceBundle | Properties[]>>("ResourceBundle.getBundle", basename, locale);
 
-        if (Array.isArray(resource)) {
-            return new PropertyResource(resource);
-        }
-
         if (ResourceBundle.isBundle(resource)) {
             return resource;
         }
 
+        if (Array.isArray(resource)) {
+            let bundle: ResourceBundle;
+            let parent: ResourceBundle;
+
+            for (const properties of resource) {
+                bundle = new PropertyResourceBundle(properties);
+                if (parent) bundle.setParent(parent);
+                parent = bundle;
+            }
+
+            return bundle;
+        }
+
         if (resource) {
-            throw new Error(`Invalid ResourceBundle for "${basename}"`);
+            throw new Error(`Invalid ResourceBundle received for "${basename}"`);
         }
     }
 
     getString(key: string): string {
         return this.handleGetObject(key);
     }
+
+    getObject(key: string): any {
+        let obj = this.handleGetObject(key);
+        if (obj == null) {
+            obj = this.parent?.getObject(key);
+        }
+        return obj;
+    }
+
+    protected setParent(parent: ResourceBundle): void {
+        this.parent = parent;
+    }
 }
 
-class PropertyResource extends ResourceBundle {
-    constructor(protected readonly properties: Properties[]) {
+class PropertyResourceBundle extends ResourceBundle {
+    constructor(protected readonly properties: Properties) {
         super();
     }
 
     handleGetObject(key: string) {
-        for (const properties of this.properties) {
-            if (key in properties) {
-                return properties[key];
-            }
+        const {properties} = this;
+        if (key in properties) {
+            return properties[key];
         }
     }
 
     getKeys(): string[] {
-        return Object.keys(this.properties[0]);
+        return Object.keys(this.properties);
     }
 }
