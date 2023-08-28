@@ -1,6 +1,6 @@
 import {strict as assert} from "assert";
 import {createNSP} from "nsp-server-pages";
-import {fmtTags} from "../index.js";
+import {fmtTags, JstlFmt} from "../index.js";
 
 const TITLE = "fmt-param.test.ts";
 
@@ -22,11 +22,11 @@ describe(TITLE, () => {
         "info": "This is {0}. That is {1}. They are {0}-{1}s.",
     };
 
-    const props = {
-        foo: propFoo,
+    const props: { [key: string]: Properties[] } = {
+        foo: [propFoo],
     };
 
-    nsp.hook("ResourceBundle.getBundle", async (basename: string) => [props[basename as keyof typeof props]]);
+    (nsp as JstlFmt.Hooks).hook("ResourceBundle.getBundle", async (baseName) => props[baseName]);
 
     it('<fmt:param/>', async () => {
         const src: string = '<fmt:bundle basename="foo">[<fmt:message key="info"><fmt:param value="Foo"/><fmt:param value="Bar"/></fmt:message>]</fmt:bundle>';

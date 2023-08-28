@@ -2,7 +2,6 @@ import type {NSP} from "nsp-server-pages";
 import type {JstlFmt} from "../../index.js";
 import type {Locale} from "./Locale";
 
-type Properties = { [key: string]: string };
 
 export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
     protected abstract handleGetObject(key: string): any;
@@ -16,7 +15,8 @@ export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
     }
 
     static async getBundle(basename: string, locale: Locale, app: NSP.App): Promise<JstlFmt.ResourceBundle> {
-        const resource = await app.process<Promise<JstlFmt.ResourceBundle | Properties[]>>("ResourceBundle.getBundle", basename, locale);
+        type P = Promise<JstlFmt.ResourceBundle | { [key: string]: string }[]>;
+        const resource = await app.process<P>("ResourceBundle.getBundle", basename, locale);
 
         if (ResourceBundle.isBundle(resource)) {
             return resource;
@@ -58,7 +58,7 @@ export abstract class ResourceBundle implements JstlFmt.ResourceBundle {
 }
 
 class PropertyResourceBundle extends ResourceBundle {
-    constructor(protected readonly properties: Properties) {
+    constructor(protected readonly properties: { [key: string]: string }) {
         super();
     }
 

@@ -22,6 +22,18 @@ export declare namespace JstlFmt {
         parseDate: NSP.TagFn<ParseDateTagAttr>;
     };
 
+    interface Hooks {
+        /**
+         * hooks called with TagParserDef to transpile tag implementation inline.
+         *
+         * @example
+         * nsp.hook("parse.tag.c:set", tag => {
+         *     return `v => { v[${tag.attr.get("var")}] = ${tag.attr.get("value")} }`;
+         * });
+         */
+        hook(type: "ResourceBundle.getBundle", fn: (baseName: string, locale: string) => Promise<ResourceBundle | { [key: string]: string }[]>): void;
+    }
+
     interface ResourceBundle {
         getKeys(): string[];
 
