@@ -127,7 +127,7 @@ nsp.hook("ResourceBundle.getBundle", async (basename) => {
 - https://github.com/kawanet/nsp-server-pages
 - https://github.com/kawanet/nsp-jstl-taglib
 - https://github.com/kawanet/nsp-struts1-taglib
-- https://www.npmjs.com/package/nsp-jstl-taglib
+- https://github.com/kawanet/nsp-seasar2-taglib
 - https://github.com/apache/tomcat-taglibs-standard/
 - https://github.com/apache/tomcat-taglibs-standard/tree/main/impl/src/main/java/org/apache/taglibs/standard
 - https://github.com/apache/tomcat-taglibs-standard/tree/main/impl/src/main/resources/META-INF
