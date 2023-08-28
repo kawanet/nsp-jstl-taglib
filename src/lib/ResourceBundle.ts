@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlUtil} from "../../index.js";
-import type {Locale} from "./Locale";
+import type {Locale} from "../util/Locale.js";
 
 export abstract class ResourceBundle implements JstlUtil.ResourceBundle {
     protected abstract handleGetObject(key: string): any;

@@ -1,4 +1,6 @@
-export class Locale {
+import type {JstlUtil} from "../../index.js";
+
+export class Locale implements JstlUtil.Locale {
     constructor(protected language: string, protected country: string, protected variant: string) {
         //
     }
