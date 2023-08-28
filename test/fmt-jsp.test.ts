@@ -28,4 +28,12 @@ describe(TITLE, () => {
         const expected = await fs.readFile("test/resources/fmt/FormatNumberTag.txt", "utf8");
         assert.equal(tweak(result), tweak(expected));
     });
+
+    it("ParseNumberTag", async () => {
+        const render = await nsp.loadJSP("test/resources/fmt/ParseNumberTag.jsp");
+        const context = {};
+        const result = await render(context);
+        const expected = await fs.readFile("test/resources/fmt/ParseNumberTag.txt", "utf8");
+        assert.equal(tweak(result), tweak(expected));
+    });
 });

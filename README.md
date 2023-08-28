@@ -85,7 +85,7 @@ const {cTags, fmtTags, fnFunctions} = require("nsp-jstl-taglib");
 | `<fmt:message>`         | 👍 OK      |                                           |
 | `<fmt:param>`           | 👍 OK      |                                           |
 | `<fmt:formatNumber>`    | 👍 OK      | works mostly. some feature still missing  |
-| `<fmt:parseNumber>`     | 🕑 Not yet |                                           |
+| `<fmt:parseNumber>`     | 👍 OK      |                                           |
 | `<fmt:formatDate>`      | 👍 OK      | works mostly. some feature still missing  |
 | `<fmt:parseDate>`       | 🕑 Not yet |                                           |
 
