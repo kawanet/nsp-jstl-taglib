@@ -12,7 +12,7 @@ const isTrue = (v: any): v is true => (!!v && v !== "false");
  * org.apache.taglibs.standard.tag.rt.core.IfTag
  *
  * @description
- * Simple conditional tag, which evalutes its body if the
+ * Simple conditional tag, which evaluates its body if the
  * supplied condition is true and optionally exposes a Boolean
  * scripting variable representing the evaluation of this condition
  */

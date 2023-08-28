@@ -10,7 +10,7 @@ const isTrue = (v: any): v is true => (!!v && v !== "false");
  *
  * @description
  * Subtag of <choose> that includes its body if its
- * condition evalutes to 'true'
+ * condition evaluates to 'true'
  */
 export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
     return (context) => {

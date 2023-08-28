@@ -58,7 +58,7 @@ export declare namespace JstlC {
      * org.apache.taglibs.standard.tag.rt.core.IfTag
      *
      * @description
-     * Simple conditional tag, which evalutes its body if the
+     * Simple conditional tag, which evaluates its body if the
      * supplied condition is true and optionally exposes a Boolean
      * scripting variable representing the evaluation of this condition
      */
@@ -193,7 +193,7 @@ export declare namespace JstlC {
      * org.apache.taglibs.standard.tag.rt.core.ForTokensTag
      *
      * @description
-     * Iterates over tokens, separated by the supplied delimeters
+     * Iterates over tokens, separated by the supplied delimiters
      */
     interface ForTokensTagAttr {
         /**
@@ -416,7 +416,7 @@ export declare namespace JstlC {
      *
      * @description
      * Subtag of <choose> that includes its body if its
-     * condition evalutes to 'true'
+     * condition evaluates to 'true'
      */
     interface WhenTagAttr {
         /**

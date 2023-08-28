@@ -7,7 +7,7 @@ import {getLoopStatus} from "../util/LoopStatus.js";
  * org.apache.taglibs.standard.tag.rt.core.ForTokensTag
  *
  * @description
- * Iterates over tokens, separated by the supplied delimeters
+ * Iterates over tokens, separated by the supplied delimiters
  */
 
 export const forTokensTag: NSP.TagFn<JstlC.ForTokensTagAttr> = (tag) => {
