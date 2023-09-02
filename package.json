@@ -1,7 +1,7 @@
 {
   "name": "nsp-jstl-taglib",
   "description": "NSP taglib for JSTL Jakarta Standard Tag Library",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "author": "@kawanet",
   "bugs": {
     "url": "https://github.com/kawanet/nsp-jstl-taglib/issues"
@@ -12,9 +12,9 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
-    "@types/node": "^20.5.6",
+    "@types/node": "^20.5.8",
     "mocha": "^10.2.0",
-    "nsp-server-pages": "^0.2.0",
+    "nsp-server-pages": "^0.2.2",
     "typescript": "^5.2.2"
   },
   "exports": {
