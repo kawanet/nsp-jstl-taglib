@@ -1,3 +1,4 @@
+import type {NSP} from "nsp-server-pages";
 import type {JstlUtil} from "../../index.js";
 
 interface LoopStatusOptions<T> {
@@ -8,6 +9,10 @@ interface LoopStatusOptions<T> {
 }
 
 export const getLoopStatus = <T>(options: LoopStatusOptions<T>) => new LoopStatus<T>(options);
+
+export const loopStatusStore = <T>(app: NSP.App, context: any) => {
+    return app.store<JstlUtil.LoopTagStatus<T>>(context, "jstl.LoopTagStatus");
+};
 
 class LoopStatus<T> implements JstlUtil.LoopTagStatus<T> {
     protected items: T[];

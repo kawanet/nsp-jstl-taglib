@@ -1,6 +1,6 @@
 import type {NSP} from "nsp-server-pages";
 import type {JstlC} from "../../index.js";
-import {getLoopStatus} from "../util/LoopStatus.js";
+import {getLoopStatus, loopStatusStore} from "../util/LoopStatus.js";
 
 /**
  * <c:forTokens>
@@ -23,6 +23,9 @@ export const forTokensTag: NSP.TagFn<JstlC.ForTokensTagAttr> = (tag) => {
         const status = getLoopStatus({items, begin, end, step});
         if (varStatus) context[varStatus] = status;
 
+        const store = loopStatusStore(tag.app, context);
+        store.open(status);
+
         const results: (string | Promise<string>)[] = [];
 
         while (!status.isLast()) {
@@ -31,6 +34,8 @@ export const forTokensTag: NSP.TagFn<JstlC.ForTokensTagAttr> = (tag) => {
             const result = await tag.body(context);
             results.push(result);
         }
+
+        store.close();
 
         return tag.app.concat(results);
     };
