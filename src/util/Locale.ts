@@ -1,7 +1,7 @@
 import type {JstlUtil} from "../../index.js";
 
 export class Locale implements JstlUtil.Locale {
-    constructor(protected language: string, protected country: string, protected variant: string) {
+    constructor(public language: string, public country: string, public variant: string) {
         //
     }
 

@@ -12,6 +12,10 @@ export declare namespace JstlUtil {
     }
 
     interface Locale {
+        language: string;
+        country: string;
+        variant: string;
+
         getLanguage(): string;
 
         getCountry(): string;
@@ -20,6 +24,13 @@ export declare namespace JstlUtil {
     }
 
     interface LoopTagStatus<T> {
+        current: T;
+        index: number;
+        count: number;
+        begin: number;
+        end: number;
+        step: number;
+
         getCurrent(): T;
 
         getIndex(): number;

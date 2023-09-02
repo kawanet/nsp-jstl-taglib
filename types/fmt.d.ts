@@ -25,10 +25,8 @@ export declare namespace JstlFmt {
 
     interface Hooks {
         /**
-         * hooks called with TagParserDef to transpile tag implementation inline.
-         *
          * @example
-         * nsp.hook("parse.tag.c:set", tag => {
+         * nsp.hook("ResourceBundle.getBundle", (baseName, locale) => {
          *     return `v => { v[${tag.attr.get("var")}] = ${tag.attr.get("value")} }`;
          * });
          */
