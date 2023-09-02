@@ -52,6 +52,7 @@ export const messageTag: NSP.TagFn<JstlFmt.MessageTagAttr> = (tag) => {
             const store = fmtBundleStore(tag.app, context);
 
             store.find(bundle => {
+                if (!bundle) return;
                 const {prefix} = bundle;
                 message = bundle.resource.getString(prefix ? prefix + key : key);
                 return (message != null);
