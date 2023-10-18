@@ -13,7 +13,7 @@ const isTrue = (v: any): v is true => (!!v && v !== "false");
  * condition evaluates to 'true'
  */
 export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
-    return (context) => {
+    return async (context) => {
         const store = cChooseStore(tag.app, context);
         const status = store.get();
 
@@ -26,7 +26,10 @@ export const whenTag: NSP.TagFn<JstlC.WhenTagAttr> = (tag) => {
             const {test} = tag.attr(context);
             if (isTrue(test)) {
                 store.set(true);
-                return tag.body(context);
+                store.open();
+                const body = await tag.body(context);
+                store.close();
+                return body;
             }
         }
     }
